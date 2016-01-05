@@ -1,0 +1,14 @@
+name: atom_dartino
+version: 0.0.1
+description: A Dartino plugin for Atom.
+
+environment:
+  sdk: '>=1.9.0 <2.0.0'
+
+dependencies:
+  atom:
+    git: https://github.com/dart-atom/atom.dart.git
+  pub_semver: ^1.2.1
+
+dev_dependencies:
+  grinder: ^0.8.0+1

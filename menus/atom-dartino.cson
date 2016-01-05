@@ -1,0 +1,13 @@
+'menu': [
+  {
+    label: 'Packages'
+    submenu: [
+      {
+        label: 'Dartino'
+        submenu: [
+          { label: 'Run app on device', command: 'dartino:run-app-on-device' }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,8 @@
+# Keybindings require three things to be fully defined: A selector that is
+# matched against the focused element, the keystroke and the command to execute.
+# For more detailed documentation see
+# https://atom.io/docs/latest/behind-atom-keymaps-in-depth.
+
+# Global commands
+'atom-workspace':
+  'ctrl-alt-shift-f6': 'dartino:rebuild-restart-dev'

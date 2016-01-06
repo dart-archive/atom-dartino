@@ -11,7 +11,12 @@ import 'dart:convert';
 /// This program communicates with an underlying Dartino device
 /// via the TTY file socket on a Linux or Mac.
 main(List<String> args) async {
-  var ttyPath = '/dev/ttyACM0';
+  if (args.isEmpty) {
+    print('Usage: <ttyPath> list-of-cmds');
+    exit(1);
+  }
+  var ttyPath = args[0];
+  _cmds = new List.from(args.sublist(1));
   var ttyFile = new File(ttyPath);
   // if (!ttyFile.existsSync()) throw 'Device not connected: $ttyPath';
 
@@ -19,7 +24,6 @@ main(List<String> args) async {
   print('opened $ttyPath');
   await write('\n');
   await read();
-  _cmds = new List.from(args);
   while (_cmds.isNotEmpty) {
     String cmd = _cmds.removeAt(0);
     if (cmd == 'exit') break;

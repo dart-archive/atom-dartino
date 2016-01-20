@@ -9,6 +9,7 @@ dependencies:
   atom:
     git: https://github.com/dart-atom/atom.dart.git
   pub_semver: ^1.2.1
+  serial_port: ^0.3.1
 
 dev_dependencies:
   grinder: ^0.8.0+1

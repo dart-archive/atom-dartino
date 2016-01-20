@@ -4,12 +4,21 @@
 
 library dartino.device;
 
-import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+
+import 'package:serial_port/serial_port.dart';
 
 /// This program communicates with an underlying Dartino device
 /// via the TTY file socket on a Linux or Mac.
+///
+/// This requires that the serial_port pub package
+/// https://pub.dartlang.org/packages/serial_port
+/// and manually build that on your machine
+/// * cd ~/.pub-cache/hosted/pub.dartlang.org/serial_port-0.3.1
+/// * pub get
+/// * make
 main(List<String> args) async {
   if (args.isEmpty) {
     print('Usage: <ttyPath> list-of-cmds');
@@ -17,21 +26,47 @@ main(List<String> args) async {
   }
   var ttyPath = args[0];
   _cmds = new List.from(args.sublist(1));
-  var ttyFile = new File(ttyPath);
-  // if (!ttyFile.existsSync()) throw 'Device not connected: $ttyPath';
 
-  _tty = await ttyFile.open(mode: WRITE);
+  var tty = new SerialPort(ttyPath, baudrate: 115200);
+  print('opening serial port $ttyPath');
+  var timeout = new Duration(seconds: 3);
+  await tty.open().timeout(timeout).catchError((e) {
+    print('Failed to connect to $ttyPath in $timeout');
+    exit(1);
+  }, test: (e) => e is TimeoutException);
   print('opened $ttyPath');
-  await write('\n');
-  await read();
-  while (_cmds.isNotEmpty) {
-    String cmd = _cmds.removeAt(0);
-    if (cmd == 'exit') break;
-    await write('$cmd\n');
-    await read();
-  }
-  echoLine();
-  print('complete');
+
+  var subscription = tty.onRead.map(BYTES_TO_STRING).listen(print);
+  await new Future.delayed(new Duration(milliseconds: 100));
+
+  tty.writeString('\nfletch run\n');
+
+  await new Future.delayed(new Duration(milliseconds: 100));
+  await subscription.cancel();
+
+  await tty.close();
+  print('closed $ttyPath');
+
+  // var ttyFile = new File(ttyPath);
+  // // if (!ttyFile.existsSync()) throw 'Device not connected: $ttyPath';
+  // print(ttyFile.statSync());
+  //
+  // var timeout = new Duration(seconds: 3);
+  // _tty = await ttyFile.open(mode: READ).timeout(timeout).catchError((e) {
+  //   print('Failed to connect to $ttyPath in $timeout');
+  //   exit(1);
+  // }, test: (e) => e is TimeoutException);
+  // print('opened $ttyPath');
+  // await write('\n');
+  // await read();
+  // while (_cmds.isNotEmpty) {
+  //   String cmd = _cmds.removeAt(0);
+  //   if (cmd == 'exit') break;
+  //   await write('$cmd\n');
+  //   await read();
+  // }
+  // echoLine();
+  // print('complete');
 }
 
 RandomAccessFile _tty;

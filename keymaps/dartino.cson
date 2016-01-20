@@ -6,4 +6,3 @@
 # Global commands
 'atom-workspace':
   'ctrl-f6': 'dartino:run-app-on-device'
-  'ctrl-alt-shift-f6': 'dartino:rebuild-restart-dev'

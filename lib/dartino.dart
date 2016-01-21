@@ -4,11 +4,14 @@
 
 library atom.dartino.plugin;
 
+import 'dart:async';
+
 import 'package:atom/atom.dart';
 import 'package:atom/node/fs.dart';
 import 'package:atom/node/process.dart';
 import 'package:atom/utils/disposable.dart';
 import 'package:logging/logging.dart';
+import 'dart:convert';
 
 export 'package:atom/atom.dart' show registerPackage;
 
@@ -38,7 +41,7 @@ class DartinoDevPackage extends AtomPackage {
         'title': 'Device path.',
         'description': 'The /dev/tty* path for accessing a connected device.',
         'type': 'string',
-        'default': (isMac ? '/dev/tty.usbmodem14143' : '/dev/ttyACM0'),
+        'default': '',
         'order': 1
       },
       // development
@@ -79,25 +82,25 @@ class DartinoDevPackage extends AtomPackage {
 /// Return the path to the dartino plugin.
 /// If not found, report an error to the user and return `null`.
 String get _dartinoPluginPath {
-  // TODO(danrubel) cleanup this HACK
-  // Find the `dartlang` project.
-  // Directory proj = atom.project.getDirectories().firstWhere(
-  //     (d) => d.getBaseName().endsWith('atom-dartino'), orElse: () => null
-  // );
-  // if (proj == null) {
-  //   atom.notifications.addWarning("Unable to find project '${'dartlang'}'.");
-  //   return new Future.value();
-  // }
-  if (isMac) return '/Users/danrubel/work/git/atom/atom-dartino';
-  return '/usr/local/google/home/danrubel/work/git/atom/atom-dartino';
+  List<String> allPkgRoots = atom.packages.getPackageDirPaths();
+  for (String pkgsRoot in allPkgRoots) {
+    String path = fs.join(pkgsRoot, pluginId);
+    if (fs.existsSync(path)) return path;
+  }
+  atom.notifications.addError('Cannot find $pluginId package directory.',
+      detail: 'Cannot find $pluginId in ${allPkgRoots[0]}', dismissable: true);
+  return null;
 }
 
-String get _deviceTtyPath {
+/// Return the path to the device communications utility.
+/// If not found, report an error to the user and return `null`.
+String get _deviceCommPath {
   if (_dartinoPluginPath == null) return null;
-  String path = fs.join(_dartinoPluginPath, 'bin', 'device_tty.dart');
+  String path = fs.join(_dartinoPluginPath, 'bin', 'device_comm.dart');
   if (!fs.existsSync(path)) {
-    atom.notifications.addError('Cannot find Device TTY utility.',
-        detail: 'Cannot find Device TTY utility at $path', dismissable: true);
+    atom.notifications.addError('Cannot find device communication utility.',
+        detail: 'Cannot find device communication utility at $path',
+        dismissable: true);
     return null;
   }
   return path;
@@ -142,34 +145,60 @@ String get _vmPath {
 }
 
 _runAppOnDevice() async {
-  if (_vmPath == null || _deviceTtyPath == null)
-    return;
+  if (_vmPath == null || _deviceCommPath == null) return;
   String ttyPath = atom.config.getValue('$pluginId.devicePath');
+
+  // If no path specified, then try to find connected device
   if (ttyPath == null || ttyPath.trim().isEmpty) {
-    atom.notifications.addError('Device path is not set.',
-        detail: 'Please set the device path in '
-            'Settings > Packages > $pluginId > Device Path',
-        dismissable: true);
-    return;
+    ProcessResult result = await _runDeviceComm([]);
+    if (result.exit != 0) return;
+    List<String> portNames = JSON.decode(result.stdout)['portNames'];
+    int count = portNames.length;
+    if (count == 0) {
+      atom.notifications.addError('Found no connected devices.',
+          detail: 'Please connect the device and try again', dismissable: true);
+      return;
+    }
+    if (count != 1) {
+      atom.notifications.addError('Found $count connected devices.',
+          detail: 'Please set the device path in '
+              'Settings > Packages > $pluginId > Device Path',
+          dismissable: true);
+      return;
+    }
+    ttyPath = portNames[0];
   }
+
+  // Check that the specified connection is valid
   if (!fs.existsSync(ttyPath)) {
     atom.notifications.addError('Cannot find device.',
         detail: 'Cannot find device at $ttyPath. '
-         'Please connect the device or set the device path in '
+            'Please connect the device or set the device path in '
             'Settings > Packages > $pluginId > Device Path',
         dismissable: true);
     return;
   }
-  ProcessRunner runner = new ProcessRunner(_vmPath,
-      args: [_deviceTtyPath, ttyPath, 'fletch run'], cwd: _dartinoPluginPath);
-  runner.execSimple().then((result) {
-    if (result.exit == 0) {
-      atom.notifications.addInfo('Launched app on device', dismissable: true);
-    } else {
-      atom.notifications.addError('Launch failed',
-          dismissable: true,
-          detail: 'exit code ${result.exit}\n${result.stdout}'
-              '\n${result.stderr}');
-    }
-  });
+
+  // TODO build and deploy the app to be run
+
+  // Run the app on the device
+  if ((await _runDeviceComm([ttyPath, 'fletch', 'run'])).exit == 0) {
+    atom.notifications.addInfo('Launched app on device', dismissable: true);
+  }
+}
+
+/// Launch the deviceComm with the given arguments and return the result.
+/// Notify the user if there is a problem.
+Future<ProcessResult> _runDeviceComm(List<String> args) async {
+  List runnerArgs = [_deviceCommPath]..addAll(args);
+  ProcessRunner runner =
+      new ProcessRunner(_vmPath, args: runnerArgs, cwd: _dartinoPluginPath);
+  ProcessResult result = await runner.execSimple();
+  if (result.exit != 0) {
+    atom.notifications.addError('Launch failed',
+        dismissable: true,
+        detail: 'exit code ${result.exit}\n${result.stdout}'
+            '\n${result.stderr}');
+  }
+  return result;
 }

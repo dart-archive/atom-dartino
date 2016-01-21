@@ -13,6 +13,9 @@ import 'package:serial_port/serial_port.dart';
 /// This program communicates with an underlying Dartino device
 /// via the TTY file socket on a Linux or Mac.
 ///
+/// With no arguments, this program will return a JSON map
+/// containing a list of all connected devices.
+///
 /// This requires that the serial_port pub package
 /// https://pub.dartlang.org/packages/serial_port
 /// and manually build that on your machine
@@ -21,8 +24,12 @@ import 'package:serial_port/serial_port.dart';
 /// * make
 main(List<String> args) async {
   if (args.isEmpty) {
-    print('Usage: <ttyPath> list-of-cmds');
-    exit(1);
+    List<String> portNames = await SerialPort.availablePortNames;
+    if (Platform.isMacOS) {
+      portNames.retainWhere((n) => n.startsWith('/dev/tty.usb'));
+    }
+    print(JSON.encode({'portNames': portNames}));
+    exit(0);
   }
   var ttyPath = args[0];
   _cmds = new List.from(args.sublist(1));

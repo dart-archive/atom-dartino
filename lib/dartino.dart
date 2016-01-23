@@ -11,7 +11,8 @@ import 'package:atom/node/fs.dart';
 import 'package:atom/node/process.dart';
 import 'package:atom/utils/disposable.dart';
 import 'package:logging/logging.dart';
-import 'dart:convert';
+
+import 'usb.dart';
 
 export 'package:atom/atom.dart' show registerPackage;
 
@@ -150,13 +151,16 @@ _runAppOnDevice() async {
 
   // If no path specified, then try to find connected device
   if (ttyPath == null || ttyPath.trim().isEmpty) {
-    ProcessResult result = await _runDeviceComm([]);
-    if (result.exit != 0) return;
-    List<String> portNames = JSON.decode(result.stdout)['portNames'];
+    List<String> portNames = await connectedDevices();
+    if (portNames == null) return;
     int count = portNames.length;
     if (count == 0) {
       atom.notifications.addError('Found no connected devices.',
-          detail: 'Please connect the device and try again', dismissable: true);
+          detail: 'Please connect the device and try again.\n'
+              'If the device is already connected, '
+              'please set the device path in '
+              'Settings > Packages > $pluginId > Device Path',
+          dismissable: true);
       return;
     }
     if (count != 1) {

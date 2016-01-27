@@ -4,10 +4,7 @@
 
 library atom.dartino.plugin;
 
-import 'dart:async';
-
 import 'package:atom/atom.dart';
-import 'package:atom/node/fs.dart';
 import 'package:atom/node/process.dart';
 import 'package:atom/utils/disposable.dart';
 import 'package:logging/logging.dart';
@@ -80,73 +77,7 @@ class DartinoDevPackage extends AtomPackage {
   }
 }
 
-/// Return the path to the dartino plugin.
-/// If not found, report an error to the user and return `null`.
-String get _dartinoPluginPath {
-  List<String> allPkgRoots = atom.packages.getPackageDirPaths();
-  for (String pkgsRoot in allPkgRoots) {
-    String path = fs.join(pkgsRoot, pluginId);
-    if (fs.existsSync(path)) return path;
-  }
-  atom.notifications.addError('Cannot find $pluginId package directory.',
-      detail: 'Cannot find $pluginId in ${allPkgRoots[0]}', dismissable: true);
-  return null;
-}
-
-/// Return the path to the device communications utility.
-/// If not found, report an error to the user and return `null`.
-String get _deviceCommPath {
-  if (_dartinoPluginPath == null) return null;
-  String path = fs.join(_dartinoPluginPath, 'bin', 'device_comm.dart');
-  if (!fs.existsSync(path)) {
-    atom.notifications.addError('Cannot find device communication utility.',
-        detail: 'Cannot find device communication utility at $path',
-        dismissable: true);
-    return null;
-  }
-  return path;
-}
-
-/// Return the path to the Dart SDK as configured in the dartlang plugin.
-/// If not found, report an error to the user and return `null`.
-String get _sdkPath {
-  String path = atom.config.getValue('dartlang.sdkLocation');
-  if (path == null || path.trim().isEmpty) {
-    atom.notifications.addError('Dart SDK is not set.',
-        detail: 'Please set the Dart SDK path in '
-            'Settings > Packages > dartlang > Dart SDK Location',
-        dismissable: true);
-    return null;
-  }
-  if (!fs.existsSync(path)) {
-    atom.notifications.addError('Cannot find Dart SDK.',
-        detail: 'Cannot find Dart SDK at $path. '
-            'Please set the Dart SDK path in '
-            'Settings > Packages > dartlang > Dart SDK Location',
-        dismissable: true);
-    return null;
-  }
-  return path;
-}
-
-/// Return the path to the VM in the Dart SDK.
-/// If not found, report an error to the user and return `null`.
-String get _vmPath {
-  if (_sdkPath == null) return null;
-  String path = fs.join(_sdkPath, 'bin', 'dart');
-  if (!fs.existsSync(path)) {
-    atom.notifications.addError('Cannot find Dart VM in the Dart SDK.',
-        detail: 'Cannot find Dart VM at $path. '
-            'Please set the Dart SDK path in '
-            'Settings > Packages > dartlang > Dart SDK Location',
-        dismissable: true);
-    return null;
-  }
-  return path;
-}
-
 _runAppOnDevice() async {
-  if (_vmPath == null || _deviceCommPath == null) return;
   String ttyPath = atom.config.getValue('$pluginId.devicePath');
 
   // If no path specified, then try to find connected device
@@ -173,36 +104,11 @@ _runAppOnDevice() async {
     ttyPath = portNames[0];
   }
 
-  // Check that the specified connection is valid
-  if (!fs.existsSync(ttyPath)) {
-    atom.notifications.addError('Cannot find device.',
-        detail: 'Cannot find device at $ttyPath. '
-            'Please connect the device or set the device path in '
-            'Settings > Packages > $pluginId > Device Path',
-        dismissable: true);
-    return;
-  }
-
   // TODO build and deploy the app to be run
 
   // Run the app on the device
-  if ((await _runDeviceComm([ttyPath, 'fletch', 'run'])).exit == 0) {
+  if (await sendDeviceCmd(ttyPath, 'run')) {
     atom.notifications.addInfo('Launched app on device', dismissable: true);
   }
 }
 
-/// Launch the deviceComm with the given arguments and return the result.
-/// Notify the user if there is a problem.
-Future<ProcessResult> _runDeviceComm(List<String> args) async {
-  List runnerArgs = [_deviceCommPath]..addAll(args);
-  ProcessRunner runner =
-      new ProcessRunner(_vmPath, args: runnerArgs, cwd: _dartinoPluginPath);
-  ProcessResult result = await runner.execSimple();
-  if (result.exit != 0) {
-    atom.notifications.addError('Launch failed',
-        dismissable: true,
-        detail: 'exit code ${result.exit}\n${result.stdout}'
-            '\n${result.stderr}');
-  }
-  return result;
-}

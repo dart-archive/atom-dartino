@@ -8,109 +8,146 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:serial_port/serial_port.dart';
+import 'serial/comm.dart';
 
-/// This program communicates with an underlying Dartino device
-/// via the TTY file socket on a Linux or Mac.
+/// This program communicates with an underlying Dartino device.
 ///
-/// This requires that the serial_port pub package
-/// https://pub.dartlang.org/packages/serial_port
-/// and manually build that on your machine
-/// * cd ~/.pub-cache/hosted/pub.dartlang.org/serial_port-0.3.1
-/// * pub get
-/// * make
+/// Launch: device_comm.dart <portName>
+/// where <portName> is the path used to communicate with the tty device
+/// (e.g. dart device_comm.dart /dev/tty.usbmodem1314)
+///
+/// If no arguments are supplied, then this returns a list of connected
+/// devices and exits. If a portName is supplied, then a communications port
+/// is opened to that device and this listens on stdin for commands.
+///
+/// Send commands to the device via stdin where each line is considered a command.
+/// If the line starts with '{' then it is interpreted as a JSON formatted
+/// command otherwise the line is interpreted as a simple command.
+///
+/// Results from executing commands are sent to stdout.
+/// Any output line that starts with '{' is JSON formatted progress update
+/// or command result where as all other lines are debugging output
+/// and should be ignored.
 main(List<String> args) async {
-  if (args.isEmpty) {
-    print('Usage: ${Platform.script.path} <ttyPath>');
+  if (args.length == 0) {
+    List<String> list = await CommPort.list().catchError((e, s) {
+      _error('Exception listing connected devices', e, s);
+      exit(1);
+    });
+    if (list == null) {
+      _error('Timed out listing connected devices');
+      exit(1);
+    }
+    _success(list: list);
+    exit(0);
+  }
+  if (args.length != 1) {
+    _error('Expected no arguments or <portName>,'
+        ' but found ${args.length} arguments');
     exit(1);
   }
-  var ttyPath = args[0];
-  _cmds = new List.from(args.sublist(1));
+  var portName = args[0];
 
-  var tty = new SerialPort(ttyPath, baudrate: 115200);
-  print('opening serial port $ttyPath');
-  var timeout = new Duration(seconds: 3);
-  await tty.open().timeout(timeout).catchError((e) {
-    print('Failed to connect to $ttyPath in $timeout');
+  // Connect
+  print('connecting to $portName');
+  _comm = await CommPort.connect(portName).catchError((e, s) {
+    _error('Exception connecting to $portName', e, s);
     exit(1);
-  }, test: (e) => e is TimeoutException);
-  print('opened $ttyPath');
+  });
+  if (_comm == null) {
+    _error('Timed out connecting to $portName');
+    exit(1);
+  }
+  print('connected to $portName');
 
-  var subscription = tty.onRead.map(BYTES_TO_STRING).listen(print);
-  await new Future.delayed(new Duration(milliseconds: 100));
+  // Setup stream to listen for client commands
+  _running = true;
+  while (_running) {
+    await _processRequest(stdin.readLineSync());
+  }
 
-  tty.writeString('\nfletch run\n');
-
-  await new Future.delayed(new Duration(milliseconds: 100));
-  await subscription.cancel();
-
-  await tty.close();
-  print('closed $ttyPath');
-
-  // var ttyFile = new File(ttyPath);
-  // // if (!ttyFile.existsSync()) throw 'Device not connected: $ttyPath';
-  // print(ttyFile.statSync());
-  //
-  // var timeout = new Duration(seconds: 3);
-  // _tty = await ttyFile.open(mode: READ).timeout(timeout).catchError((e) {
-  //   print('Failed to connect to $ttyPath in $timeout');
-  //   exit(1);
-  // }, test: (e) => e is TimeoutException);
-  // print('opened $ttyPath');
-  // await write('\n');
-  // await read();
-  // while (_cmds.isNotEmpty) {
-  //   String cmd = _cmds.removeAt(0);
-  //   if (cmd == 'exit') break;
-  //   await write('$cmd\n');
-  //   await read();
-  // }
-  // echoLine();
-  // print('complete');
+  print('disconnecting');
+  await _comm.disconnect();
+  _comm = null;
+  print('disconnected');
 }
 
-RandomAccessFile _tty;
-List<String> _cmds;
-String _lastLine = '';
-StringBuffer _line = new StringBuffer();
+/// The connection to the device.
+CommPort _comm;
 
-String echo(List<int> bytes) {
-  String ch = UTF8.decode(bytes);
-  if (ch != '\n') {
-    _line.write(ch);
+bool _running;
+
+/// The default timeout when waiting on information from the device
+Duration _timeout = new Duration(seconds: 3);
+
+//==== Processing =============================
+
+/// Process the given client command.
+Future _processRequest(String line) async {
+  print('received request $line');
+  String cmd;
+  if (line.startsWith('{')) {
+    cmd = JSON.decode(line)['request'];
   } else {
-    echoLine();
+    cmd = line.trim();
   }
-  return ch;
+  print('processing request $cmd');
+  if (cmd == 'run') return _runDefaultApp();
+  if (cmd == 'exit') return _exit();
+  _error('Unknown command: $line');
 }
 
-void echoLine() {
-  _lastLine = _line.toString();
-  print('> $_lastLine');
-  _line.clear();
-}
+//==== Commands =============================
 
-Future read() async {
-  bool done() {
-    if (_line.length == 0) {
-      bool halted = _lastLine.startsWith('HALT: ');
-      if (halted) _cmds.clear();
-      return halted;
-    }
-    if (_line.length == 1) {
-      return _line.toString() == ']';
-    }
-    return false;
-  }
-  echo(await _tty.read(1));
-  while (!done()) {
-    echo(await _tty.read(1));
+/// Run the default app that is already flashed on the device.
+_runDefaultApp() async {
+  String response = await _comm.send('fletch run');
+  print('device response $response');
+  if (response == null) return;
+  if (response.contains('starting fletch-vm')) {
+    _success(details: response);
+  } else {
+    _error('Did not receive confirmation that app started', response);
   }
 }
 
-Future write(String text) async {
-  for (int byte in UTF8.encode(text)) {
-    await _tty.writeByte(byte);
-    echo(await _tty.read(1));
-  }
+/// Close connections and exit this application without stopping the device.
+Future _exit() async {
+  _success();
+  _running = false;
 }
+
+//==== Utility =============================
+
+/// Send an error message back to the client.
+void _error(String message, [exception, stackTrace]) {
+  Map<String, dynamic> error = {};
+  error['message'] = message;
+  if (exception != null || stackTrace != null) {
+    StringBuffer details = new StringBuffer();
+    if (exception != null) details.writeln(exception);
+    if (stackTrace != null) details.write(_inline(stackTrace));
+    error['details'] = details.toString();
+  }
+  print(JSON.encode({'error': error}));
+}
+
+/// Send a success message back to the client.
+void _success({List<String> list, String details}) {
+  Map<String, dynamic> result = {'message': 'success'};
+  if (list != null) result['list'] = list;
+  if (details != null) result['details'] = _inline(details);
+  print(JSON.encode({'result': result}));
+}
+
+/// Encode the given data such that
+///   \ --> \\
+///   carriage return newline --> \n
+///   carriage return --> \n
+///   newline --> \n
+String _inline(data) => data
+    .toString()
+    .replaceAll('\\', '\\\\')
+    .replaceAll('\r\n', '\\n')
+    .replaceAll('\r', '\\n')
+    .replaceAll('\n', '\\n');

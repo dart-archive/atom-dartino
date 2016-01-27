@@ -58,7 +58,10 @@ main(List<String> args) async {
     _error('Timed out connecting to $portName');
     exit(1);
   }
+
+  // Notify client of successful connect
   print('connected to $portName');
+  _success();
 
   // Setup stream to listen for client commands
   _running = true;

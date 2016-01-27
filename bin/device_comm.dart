@@ -105,7 +105,7 @@ _runDefaultApp() async {
   print('device response $response');
   if (response == null) return;
   if (response.contains('starting fletch-vm')) {
-    _success(details: response);
+    _success(detail: response);
   } else {
     _error('Did not receive confirmation that app started', response);
   }
@@ -124,19 +124,19 @@ void _error(String message, [exception, stackTrace]) {
   Map<String, dynamic> error = {};
   error['message'] = message;
   if (exception != null || stackTrace != null) {
-    StringBuffer details = new StringBuffer();
-    if (exception != null) details.writeln(exception);
-    if (stackTrace != null) details.write(_inline(stackTrace));
-    error['details'] = details.toString();
+    StringBuffer detail = new StringBuffer();
+    if (exception != null) detail.writeln(exception);
+    if (stackTrace != null) detail.write(_inline(stackTrace));
+    error['detail'] = detail.toString();
   }
   print(JSON.encode({'error': error}));
 }
 
 /// Send a success message back to the client.
-void _success({List<String> list, String details}) {
+void _success({List<String> list, String detail}) {
   Map<String, dynamic> result = {'message': 'success'};
   if (list != null) result['list'] = list;
-  if (details != null) result['details'] = _inline(details);
+  if (detail != null) result['detail'] = _inline(detail);
   print(JSON.encode({'result': result}));
 }
 

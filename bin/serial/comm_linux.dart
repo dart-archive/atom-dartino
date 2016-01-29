@@ -8,6 +8,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'comm.dart';
+import 'tty_file_comm_port.dart';
 
 /// Clients should call [Comm.list] rather than this method.
 ///
@@ -45,50 +46,4 @@ Future<CommPort> connect(String portName, Duration timeout) async {
   if (await comm.init(timeout)) return comm;
   comm.disconnect();
   return null;
-}
-
-/// An implementation of [CommPort] that uses /dev/ttyACM*
-/// to interact the the connected device.
-class TtyFileCommPort extends CommPort {
-  /// The connection to the device.
-  final RandomAccessFile ttyFile;
-
-  TtyFileCommPort(String name, this.ttyFile) : super(name);
-
-  /// Initialize the connection and return `true` if successful, else `false`.
-  Future<bool> init(Duration timeout) =>
-      send('', timeout: timeout).then((result) => result != null);
-
-  @override
-  Future<String> send(String text, {Duration timeout}) async {
-    timeout ??= CommPort.defaultTimeout;
-
-    // Send the command
-    bool success = await ttyFile
-        .writeString('$text\n')
-        .then((_) => true)
-        .timeout(timeout)
-        .catchError((_) => false, test: (e) => e is TimeoutException);
-    if (!success) return null;
-
-    // Wait for a response
-    bool newline = false;
-    StringBuffer received = new StringBuffer();
-    while (true) {
-      int byte = await ttyFile
-          .readByte()
-          .timeout(timeout)
-          .catchError((_) => null, test: (e) => e is TimeoutException);
-      if (byte == null) return null;
-      var ch = new String.fromCharCode(byte);
-      received.write(ch);
-      if (newline && ch == ']') {
-        return received.toString();
-      }
-      newline = ch == '\n' || ch == '\r';
-    }
-  }
-
-  @override
-  Future disconnect() => ttyFile.close();
 }

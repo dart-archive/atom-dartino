@@ -1,4 +1,4 @@
-// Copyright (c) 2015, the Dart project authors.  Please see the AUTHORS file
+// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
@@ -9,6 +9,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'serial/comm.dart';
+import 'serial/tftp_client.dart';
 
 /// This program communicates with an underlying Dartino device.
 ///
@@ -80,30 +81,82 @@ CommPort _comm;
 
 bool _running;
 
-/// The default timeout when waiting on information from the device
-Duration _timeout = new Duration(seconds: 3);
-
 //==== Processing =============================
 
 /// Process the given client command.
 Future _processRequest(String line) async {
-  print('received request $line');
   String cmd;
+  Map args;
   if (line.startsWith('{')) {
-    cmd = JSON.decode(line)['request'];
+    Map json = JSON.decode(line);
+    cmd = json['request'];
+    args = json['arguments'];
   } else {
-    cmd = line.trim();
+    List<String> split = line.split(' ');
+    cmd = split[0].trim();
+    args = {};
+    for (int index = 1; index + 1 < split.length; index += 2) {
+      args[split[index]] = split[index + 1];
+    }
   }
-  print('processing request $cmd');
-  if (cmd == 'run') return _runDefaultApp();
+  if (cmd == 'run') return _run(args);
   if (cmd == 'exit') return _exit();
   _error('Unknown command: $line');
 }
 
 //==== Commands =============================
 
+/// Deploy the application specificed in the arguments to the device
+/// and then run that application on the device.
+Future _run(Map args) async {
+  if (args == null) return _runDefaultApp();
+  String snapPath = args['path'];
+  if (snapPath == null || snapPath.isEmpty) return _runDefaultApp();
+  String snapName = snapPath.split(Platform.pathSeparator).last;
+
+  // Ping the device to see if it is connected
+  String deviceIp = '192.168.0.98';
+  print('ping $deviceIp to see if it is connected');
+  Process process = await Process.start('ping', ['-c1', deviceIp]);
+  var exitCode = await process.exitCode
+      .timeout(new Duration(seconds: 2))
+      .catchError((e) => 92, test: (e) => e is TimeoutException);
+  if (exitCode != 0) {
+    _error('Failed to ping device at $deviceIp');
+    return null;
+  }
+
+  // Signal the device to receive the payload
+  //   ] fletch lines.snap
+  //   waiting for lines.snap via TFTP. mode: run
+  //       --- send binary via tftp here ---
+  //   ] starting fletch-vm...
+  //   loading snapshot: 31651 bytes ...
+  //   running program...
+  print('request device receive binary');
+  String response = await _comm.send('fletch $snapName');
+  if (response == null) {
+    _error('Request timed out.');
+    return null;
+  }
+  if (!response.contains('waiting for') || !response.contains('via TFTP')) {
+    _error('Unexpected response from device:\n$response');
+    return null;
+  }
+
+  print('send binary to device using tftp $deviceIp');
+  String errMsg = await new TftpClient(deviceIp).putBinary(snapPath, snapName);
+  if (errMsg != null) {
+    _error('Failed to send $snapPath to $deviceIp.\n$errMsg');
+    return null;
+  }
+
+  _success();
+  return null;
+}
+
 /// Run the default app that is already flashed on the device.
-_runDefaultApp() async {
+Future _runDefaultApp() async {
   String response = await _comm.send('fletch run');
   print('device response $response');
   if (response == null) return;

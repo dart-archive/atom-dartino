@@ -110,7 +110,7 @@ abstract class _TftpConnection {
 
     Datagram payload = socket.receive();
     if (payload == null) {
-      opComplete('Received: null');
+      print('Received: null');
       return;
     }
 

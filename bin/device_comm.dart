@@ -133,7 +133,7 @@ Future<bool> _run(Map args) async {
   print('ping $deviceIp to see if it is connected');
   Process process = await Process.start('ping', ['-c1', deviceIp]);
   var exitCode = await process.exitCode
-      .timeout(new Duration(seconds: 2))
+      .timeout(new Duration(seconds: 5))
       .catchError((e) => 92, test: (e) => e is TimeoutException);
   if (exitCode != 0) {
     _error('Failed to ping device at $deviceIp');

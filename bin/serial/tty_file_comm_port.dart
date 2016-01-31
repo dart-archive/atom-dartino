@@ -37,7 +37,7 @@ class TtyFileCommPort extends CommPort {
         .then((_) => true)
         .timeout(timeout)
         .catchError((_) => false, test: (e) => e is TimeoutException);
-    if (!success) return null;
+    if (!success) return 'Send timed out';
 
     // Wait for a response
     bool newline = false;
@@ -47,7 +47,7 @@ class TtyFileCommPort extends CommPort {
           .readByte()
           .timeout(timeout)
           .catchError((_) => null, test: (e) => e is TimeoutException);
-      if (byte == null) return null;
+      if (byte == null) return 'Timed out waiting for response:\n$received';
       var ch = new String.fromCharCode(byte);
       received.write(ch);
       if (newline && ch == ']') {

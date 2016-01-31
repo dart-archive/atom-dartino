@@ -91,14 +91,16 @@ class SerialCommPort extends CommPort {
         .then((_) => true)
         .timeout(timeout)
         .catchError((_) => false, test: (e) => e is TimeoutException);
-    if (!success) return null;
+    if (!success) return 'Send timed out:\n$_received';
     print('sent $text');
 
     // Wait for a response
     return _completer.future
         .then((_) => _received.toString())
         .timeout(timeout)
-        .catchError((_) => null, test: (e) => e is TimeoutException);
+        .catchError((_) {
+      return 'Timed out waiting for response:\n$_received';
+    }, test: (e) => e is TimeoutException);
   }
 
   @override

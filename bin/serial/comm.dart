@@ -35,7 +35,7 @@ abstract class CommPort {
   /// A connect may timeout if the user does not have the appropriate
   /// permissions to access the given port.
   /// Any other problem will result in an exception on the returned Future.
-  static Future<CommPort> connect(String portName, {Duration timeout}) async {
+  static Future<CommPort> open(String portName, {Duration timeout}) async {
     if (Platform.isWindows) {
       await windows.loadLibrary();
       return windows.connect(portName, timeout ?? defaultTimeout);
@@ -60,6 +60,6 @@ abstract class CommPort {
   /// Any other problem will result in an exception on the returned Future.
   Future<String> send(String text, {Duration timeout});
 
-  /// Returns a future that completes when the port is disconnected.
-  Future disconnect();
+  /// Close the port and return a future that completes.
+  Future close();
 }

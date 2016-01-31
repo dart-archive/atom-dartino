@@ -18,8 +18,14 @@ class TtyFileCommPort extends CommPort {
   TtyFileCommPort(String name, this.ttyFile) : super(name);
 
   /// Initialize the connection and return `true` if successful, else `false`.
-  Future<bool> init(Duration timeout) =>
-      send('', timeout: timeout).then((result) => result != null);
+  Future<bool> init(Duration timeout) async {
+    String result = await send('', timeout: new Duration(milliseconds: 10));
+    if (result != null) return true;
+    result = await send('', timeout: new Duration(milliseconds: 10));
+    if (result != null) return true;
+    result = await send('', timeout: timeout);
+    return result != null;
+  }
 
   @override
   Future<String> send(String text, {Duration timeout}) async {
@@ -52,5 +58,7 @@ class TtyFileCommPort extends CommPort {
   }
 
   @override
-  Future disconnect() => ttyFile.close();
+  Future close() {
+    return ttyFile.close();
+  }
 }

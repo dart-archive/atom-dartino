@@ -19,7 +19,7 @@ main(List<String> args) async {
   }
   String portName = names[0];
   print('Connecting to $portName');
-  CommPort port = await CommPort.connect(portName);
+  CommPort port = await CommPort.open(portName);
   if (port == null) {
     print('Timed out trying to connect');
     exit(1);
@@ -27,6 +27,6 @@ main(List<String> args) async {
   print('Sending command');
   String result = await port.send('fletch run');
   print('--- Response ------------\n$result\n-------------------------');
-  await port.disconnect();
+  await port.close();
   print('Disconnected');
 }

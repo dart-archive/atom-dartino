@@ -51,7 +51,7 @@ main(List<String> args) async {
 
   // Connect
   print('connecting to $portName');
-  _comm = await CommPort.connect(portName).catchError((e, s) {
+  _comm = await CommPort.open(portName).catchError((e, s) {
     _error('Exception connecting to $portName', e, s);
     exit(1);
   });
@@ -83,7 +83,7 @@ main(List<String> args) async {
 
   print('disconnecting');
   await stdinSubscription.cancel();
-  await _comm.disconnect();
+  await _comm.close();
   _comm = null;
   print('disconnected');
 }

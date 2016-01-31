@@ -37,13 +37,12 @@ Future<CommPort> connect(String portName, Duration timeout) async {
       .open(mode: FileMode.WRITE)
       .timeout(timeout)
       .catchError((e) => null, test: (e) => e is TimeoutException);
-  if (ttyFile == null) {
+  if (ttyFile == null)
     return null;
-  }
   var comm = new TtyFileCommPort(portName, ttyFile);
 
   // If establishing a connection times out, return null
   if (await comm.init(timeout)) return comm;
-  comm.disconnect();
+  comm.close();
   return null;
 }

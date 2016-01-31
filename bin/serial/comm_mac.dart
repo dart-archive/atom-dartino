@@ -45,7 +45,7 @@ Future<CommPort> connect(String portName, Duration timeout) async {
 
   // If establishing a connection times out, return null
   if (await comm.init(timeout)) return comm;
-  comm.disconnect();
+  comm.close();
   return null;
 }
 
@@ -92,19 +92,17 @@ class SerialCommPort extends CommPort {
         .timeout(timeout)
         .catchError((_) => false, test: (e) => e is TimeoutException);
     if (!success) return null;
+    print('sent $text');
 
     // Wait for a response
     return _completer.future
         .then((_) => _received.toString())
         .timeout(timeout)
-        .catchError((_) => null, test: (e) => e is TimeoutException)
-        .then((result) {
-      return result;
-    });
+        .catchError((_) => null, test: (e) => e is TimeoutException);
   }
 
   @override
-  Future disconnect() async {
+  Future close() async {
     if (_subscription != null) {
       await _subscription.cancel();
       _subscription = null;

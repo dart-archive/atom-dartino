@@ -1,4 +1,4 @@
-// Copyright (c) 2015, the Dart project authors.  Please see the AUTHORS file
+// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
@@ -54,14 +54,14 @@ Future<List<String>> connectedDevices() async {
 
 /// Send commands to a connected device.
 /// Return `true` if successful, otherwise notify the user and return `false`.
-Future<bool> sendDeviceCmd(ttyPath, String cmd) async {
+Future<bool> sendDeviceCmd(ttyPath, String cmd, {Map args}) async {
   Device device = _devices[ttyPath];
   if (device == null) {
     device = new Device(ttyPath);
     if (!await device.connect()) return false;
     _devices[ttyPath] = device;
   }
-  return device.send(cmd);
+  return device.send(cmd, args);
 }
 
 /// A connected device with an active communication connection.
@@ -108,10 +108,11 @@ class Device {
 
   /// Send the specified command and return `true` if successful.
   /// If there is a problem, notify the user and return `false`.
-  Future<bool> send(String cmd) async {
+  Future<bool> send(String cmd, Map args) async {
     Future<Map> futureResult = _nextResult();
-    String request = JSON.encode({'request': cmd});
-    _runner.write('$request\n');
+    Map request = {'request': cmd};
+    if (args != null) request['arguments'] = args;
+    _runner.write('${JSON.encode(request)}\n');
     Map result = await futureResult;
     return result != null;
   }

@@ -65,6 +65,7 @@ class DartinoDevPackage extends AtomPackage {
   }
 
   void deactivate() {
+    disconnectDevices();
     _logger.info('deactivated');
     _disposables.dispose();
   }
@@ -199,7 +200,7 @@ _runAppOnDevice(event) async {
   if (portName == null) return;
 
   // Deploy and run the app on the device
-  if (await sendDeviceCmd(portName, 'deployAndRun', args: {'path' : dstPath})) {
+  if (await sendDeviceCmd(portName, 'run', args: {'path': dstPath})) {
     atom.notifications.addInfo('Launched app on device', dismissable: true);
   }
 }

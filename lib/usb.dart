@@ -64,6 +64,11 @@ Future<bool> sendDeviceCmd(ttyPath, String cmd, {Map args}) async {
   return device.send(cmd, args);
 }
 
+/// Cleanup and discard any device connections.
+Future disconnectDevices() {
+  return Future.wait(_devices.values.map((Device d) => d.disconnect()));
+}
+
 /// A connected device with an active communication connection.
 class Device {
   final String ttyPath;
@@ -106,9 +111,16 @@ class Device {
     return true;
   }
 
+  /// Shutdown the associated device communication application.
+  Future disconnect() {
+    return send('exit').then((_) {
+      _cleanup();
+    });
+  }
+
   /// Send the specified command and return `true` if successful.
   /// If there is a problem, notify the user and return `false`.
-  Future<bool> send(String cmd, Map args) async {
+  Future<bool> send(String cmd, [Map args]) async {
     Future<Map> futureResult = _nextResult();
     Map request = {'request': cmd};
     if (args != null) request['arguments'] = args;

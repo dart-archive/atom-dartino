@@ -64,13 +64,25 @@ main(List<String> args) async {
   print('connected to $portName');
   _success();
 
-  // Setup stream to listen for client commands
-  _running = true;
-  while (_running) {
-    await _processRequest(stdin.readLineSync());
+  // Setup a client request stream
+  StreamController<String> controller = new StreamController();
+  // _comm.disconnected.then((_) {
+  //   controller.add('exit');
+  // });
+  StreamSubscription stdinSubscription = stdin
+      .transform(UTF8.decoder)
+      .transform(new LineSplitter())
+      .listen((String line) {
+    controller.add(line);
+  });
+
+  // Process requests until exit
+  await for (String line in controller.stream) {
+    if (!await _processRequest(line)) break;
   }
 
   print('disconnecting');
+  await stdinSubscription.cancel();
   await _comm.disconnect();
   _comm = null;
   print('disconnected');
@@ -79,12 +91,12 @@ main(List<String> args) async {
 /// The connection to the device.
 CommPort _comm;
 
-bool _running;
-
 //==== Processing =============================
 
 /// Process the given client command.
-Future _processRequest(String line) async {
+/// Return a future that completes when the reqeust has been processed
+/// with `true` if processing should continue, else `false`.
+Future<bool> _processRequest(String line) async {
   String cmd;
   Map args;
   if (line.startsWith('{')) {
@@ -99,16 +111,18 @@ Future _processRequest(String line) async {
       args[split[index]] = split[index + 1];
     }
   }
-  if (cmd == 'run') return _run(args);
   if (cmd == 'exit') return _exit();
+  if (cmd == 'run') return _run(args);
   _error('Unknown command: $line');
+  return true;
 }
 
 //==== Commands =============================
 
 /// Deploy the application specificed in the arguments to the device
 /// and then run that application on the device.
-Future _run(Map args) async {
+/// Return a future that completes when the operation is finished.
+Future<bool> _run(Map args) async {
   if (args == null) return _runDefaultApp();
   String snapPath = args['path'];
   if (snapPath == null || snapPath.isEmpty) return _runDefaultApp();
@@ -123,7 +137,7 @@ Future _run(Map args) async {
       .catchError((e) => 92, test: (e) => e is TimeoutException);
   if (exitCode != 0) {
     _error('Failed to ping device at $deviceIp');
-    return null;
+    return true;
   }
 
   // Signal the device to receive the payload
@@ -137,40 +151,44 @@ Future _run(Map args) async {
   String response = await _comm.send('fletch $snapName');
   if (response == null) {
     _error('Request timed out.');
-    return null;
+    return true;
   }
   if (!response.contains('waiting for') || !response.contains('via TFTP')) {
     _error('Unexpected response from device:\n$response');
-    return null;
+    return true;
   }
 
   print('send binary to device using tftp $deviceIp');
   String errMsg = await new TftpClient(deviceIp).putBinary(snapPath, snapName);
   if (errMsg != null) {
     _error('Failed to send $snapPath to $deviceIp.\n$errMsg');
-    return null;
+    return true;
   }
 
   _success();
-  return null;
+  return true;
 }
 
 /// Run the default app that is already flashed on the device.
-Future _runDefaultApp() async {
+Future<bool> _runDefaultApp() async {
   String response = await _comm.send('fletch run');
   print('device response $response');
-  if (response == null) return;
+  if (response == null) {
+    _error('Request timed out');
+    return true;
+  }
   if (response.contains('starting fletch-vm')) {
     _success(detail: response);
   } else {
     _error('Did not receive confirmation that app started', response);
   }
+  return true;
 }
 
 /// Close connections and exit this application without stopping the device.
-Future _exit() async {
+Future<bool> _exit() async {
   _success();
-  _running = false;
+  return false;
 }
 
 //==== Utility =============================

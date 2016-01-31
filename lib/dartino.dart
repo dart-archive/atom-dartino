@@ -30,8 +30,7 @@ class DartinoDevPackage extends AtomPackage {
     _logger.fine("Running on Chrome version ${process.chromeVersion}.");
 
     // Register commands.
-    _addCmd('atom-workspace', 'dartino:settings',
-        (_) => atom.workspace.open('atom://config/packages/dartino'));
+    _addCmd('atom-workspace', 'dartino:settings', _openDartinoSettings);
     _addCmd('atom-workspace', 'dartino:run-app-on-device', _runAppOnDevice);
   }
 
@@ -88,6 +87,10 @@ class DartinoDevPackage extends AtomPackage {
   }
 }
 
+void _openDartinoSettings([_]) {
+  atom.workspace.open('atom://config/packages/dartino');
+}
+
 /// Return `true` if the given file exist.
 /// If not, notify the user and return `false`.
 bool _checkSodFile(String sodPath, String relPath) {
@@ -96,7 +99,8 @@ bool _checkSodFile(String sodPath, String relPath) {
       detail: 'Could not find "$relPath" in\n$sodPath.\n'
           'Please set the SOD path in\n'
           'Settings > Packages > $pluginId > SOD root directory',
-      dismissable: true);
+      dismissable: true,
+      buttons: [new NotificationButton('Open settings', _openDartinoSettings)]);
   return false;
 }
 
@@ -157,7 +161,10 @@ Future<String> _rebuildSnap(String srcPath) async {
     atom.notifications.addError('No SOD path specified.',
         detail: 'Please set the SOD path in\n'
             'Settings > Packages > $pluginId > SOD root directory',
-        dismissable: true);
+        dismissable: true,
+        buttons: [
+          new NotificationButton('Open settings', _openDartinoSettings)
+        ]);
     return null;
   }
   if (!_checkSodFile(sodPath, 'makefile')) return null;

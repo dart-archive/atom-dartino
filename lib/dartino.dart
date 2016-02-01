@@ -97,7 +97,7 @@ bool _checkSodFile(String sodPath, String relPath) {
   if (fs.existsSync(fs.join(sodPath, relPath))) return true;
   atom.notifications.addError('Invalid SOD directory specified.',
       detail: 'Could not find "$relPath" in\n$sodPath.\n'
-          'Please set the SOD path in\n'
+          'Please build SOD and set the SOD path in\n'
           'Settings > Packages > $pluginId > SOD root directory',
       dismissable: true,
       buttons: [new NotificationButton('Open settings', _openDartinoSettings)]);
@@ -168,7 +168,7 @@ Future<String> _rebuildSnap(String srcPath) async {
     return null;
   }
   if (!_checkSodFile(sodPath, 'makefile')) return null;
-  if (!_checkSodFile(sodPath, fs.join('third_party', 'fletch'))) return null;
+  if (!_checkSodFile(sodPath, fs.join('third_party', 'dartino'))) return null;
   if (!_checkSodFile(sodPath, fs.join('third_party', 'lk'))) return null;
 
   ProcessRunner runner =

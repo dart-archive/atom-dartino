@@ -11,6 +11,6 @@ packages
 pubspec.lock
 npm-debug.log
 node_modules
-
+web/entry.dart.js.deps
 spec/all-spec.js
 spec/all-spec.js.map

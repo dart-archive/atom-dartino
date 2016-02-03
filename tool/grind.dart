@@ -4,10 +4,14 @@
 
 library atom.grind;
 
+import 'dart:convert';
 import 'dart:io';
 
-import 'package:grinder/grinder.dart';
 import 'package:atom/build/build.dart';
+import 'package:grinder/grinder.dart';
+import 'package:pub_semver/pub_semver.dart';
+
+part 'publish.dart';
 
 main(List<String> args) => grind(args);
 

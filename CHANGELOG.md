@@ -1,4 +1,4 @@
-# atom-dartino plugin changelog
+# dartino plugin changelog
 
-## unreleased
-- work in progress
+## 0.0.1
+- initial version

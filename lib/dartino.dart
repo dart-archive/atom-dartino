@@ -7,9 +7,9 @@ library atom.dartino.plugin;
 import 'dart:async';
 
 import 'package:atom/atom.dart';
-import 'package:atom/node/fs.dart';
 import 'package:atom/node/process.dart';
 import 'package:atom/utils/disposable.dart';
+import 'package:atom_dartino/sdk/sdk.dart';
 import 'package:logging/logging.dart';
 
 import 'usb.dart';
@@ -30,7 +30,7 @@ class DartinoDevPackage extends AtomPackage {
     _logger.fine("Running on Chrome version ${process.chromeVersion}.");
 
     // Register commands.
-    _addCmd('atom-workspace', 'dartino:settings', _openDartinoSettings);
+    _addCmd('atom-workspace', 'dartino:settings', openDartinoSettings);
     _addCmd('atom-workspace', 'dartino:run-app-on-device', _runAppOnDevice);
   }
 
@@ -49,7 +49,15 @@ class DartinoDevPackage extends AtomPackage {
             ' has been checked out and built.',
         'type': 'string',
         'default': '',
-        'order': 1
+        'order': 2
+      },
+      'dartinoPath': {
+        'title': 'Dartino root directory.',
+        'description': 'The directory in which http://dartino.github.io/sdk/'
+            ' has been downloaded and unzipped.',
+        'type': 'string',
+        'default': '',
+        'order': 2
       },
       // development
       'logging': {
@@ -87,21 +95,8 @@ class DartinoDevPackage extends AtomPackage {
   }
 }
 
-void _openDartinoSettings([_]) {
+void openDartinoSettings([_]) {
   atom.workspace.open('atom://config/packages/dartino');
-}
-
-/// Return `true` if the given file exist.
-/// If not, notify the user and return `false`.
-bool _checkSodFile(String sodPath, String relPath) {
-  if (fs.existsSync(fs.join(sodPath, relPath))) return true;
-  atom.notifications.addError('Invalid SOD directory specified.',
-      detail: 'Could not find "$relPath" in\n$sodPath.\n'
-          'Please build SOD and set the SOD path in\n'
-          'Settings > Packages > $pluginId > SOD root directory',
-      dismissable: true,
-      buttons: [new NotificationButton('Open settings', _openDartinoSettings)]);
-  return false;
 }
 
 /// Return the portName for the connected device.
@@ -150,56 +145,22 @@ bool _isLaunchable(String srcPath) {
   return true;
 }
 
-/// Rebuild the file to be deployed and return the path for that file.
-/// If there is a problem, notify the user and return `null`.
-Future<String> _rebuildSnap(String srcPath) async {
-  String dstPath = srcPath.substring(0, srcPath.length - 5) + '.snap';
-
-  // Find the SOD directory used to build the app
-  String sodPath = atom.config.getValue('$pluginId.sodPath');
-  if (sodPath == null || sodPath.trim().isEmpty) {
-    atom.notifications.addError('No SOD path specified.',
-        detail: 'Please set the SOD path in\n'
-            'Settings > Packages > $pluginId > SOD root directory',
-        dismissable: true,
-        buttons: [
-          new NotificationButton('Open settings', _openDartinoSettings)
-        ]);
-    return null;
-  }
-  if (!_checkSodFile(sodPath, 'makefile')) return null;
-  if (!_checkSodFile(sodPath, fs.join('third_party', 'dartino'))) return null;
-  if (!_checkSodFile(sodPath, fs.join('third_party', 'lk'))) return null;
-
-  ProcessRunner runner =
-      new ProcessRunner('make', args: [dstPath], cwd: sodPath);
-  //TODO(danrubel) show progress while building
-  atom.notifications
-      .addInfo('Building application...', detail: dstPath, dismissable: true);
-  ProcessResult processResult = await runner.execSimple();
-  String stdout = processResult.stdout;
-  if (processResult.exit != 0) {
-    atom.notifications.addError('Failed to build the app',
-        dismissable: true,
-        detail: 'exit code ${processResult.exit}\n${stdout}'
-            '\n${processResult.stderr}');
-    return null;
-  }
-  atom.notifications.addSuccess('Build successful.', dismissable: true);
-  return dstPath;
-}
-
 /// Build, deploy, and launch the app in the current editor
 /// on a connected device.
 _runAppOnDevice(event) async {
+  //TODO(danrubel) integrate this into the dartlang launch functionality
   TextEditor editor = atom.workspace.getActiveTextEditor();
+  String srcPath = editor.getPath();
+
+  // Determine which SDK is associated with this app
+  Sdk sdk = await findSdk(srcPath);
+  if (sdk == null) return;
 
   // Determine the app to be built, deployed, and launched on the device
-  String srcPath = editor.getPath();
   if (!_isLaunchable(srcPath)) return;
 
   // Build the app to be run
-  String dstPath = await _rebuildSnap(srcPath);
+  String dstPath = await sdk.compile(srcPath);
   if (dstPath == null) return;
 
   // Find the device on which to run the app
@@ -207,7 +168,7 @@ _runAppOnDevice(event) async {
   if (portName == null) return;
 
   // Deploy and run the app on the device
-  if (await sendDeviceCmd(portName, 'run', args: {'path': dstPath})) {
+  if (await sdk.deployAndRun(portName, dstPath)) {
     atom.notifications.addInfo('Launched app on device', dismissable: true);
   }
 }

@@ -23,7 +23,7 @@ publish() {
 
   var unpublishedVersion = getUnpublishedVersion();
   print('unpublished version is $unpublishedVersion');
-  var publishedVersion = new Version(0, 0, 0); //getPublishedVersion(pluginId);
+  var publishedVersion = getPublishedVersion(pluginId);
   print('published version is ${publishedVersion}');
   if (unpublishedVersion != publishedVersion) {
     throw 'Expected unpublished and published versions to be the same';
@@ -165,7 +165,6 @@ Version getPublishedVersion(String pluginId) {
   if (result.isEmpty) {
     throw 'Cannot find published version for plugin "$pluginId"';
   }
-  print('publishedInfo: $result');
   Map pkgInfo = JSON.decode(result);
   return new Version.parse(pkgInfo['version']);
 }

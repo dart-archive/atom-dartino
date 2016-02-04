@@ -1236,6 +1236,35 @@ self._domRemove = function(element) {
     $desc = $collectedClasses$.DartinoDevPackage__setupLogging_closure[1];
     DartinoDevPackage__setupLogging_closure.prototype = $desc;
     DartinoDevPackage__setupLogging_closure.$__fields__ = ["$this"];
+    function Sdk() {
+      this.$deferredAction();
+    }
+    Sdk.builtin$cls = "Sdk";
+    if (!("name" in Sdk))
+      Sdk.name = "Sdk";
+    $desc = $collectedClasses$.Sdk[1];
+    Sdk.prototype = $desc;
+    Sdk.$__fields__ = [];
+    function DartinoSdk(sdkRootPath) {
+      this.sdkRootPath = sdkRootPath;
+      this.$deferredAction();
+    }
+    DartinoSdk.builtin$cls = "DartinoSdk";
+    if (!("name" in DartinoSdk))
+      DartinoSdk.name = "DartinoSdk";
+    $desc = $collectedClasses$.DartinoSdk[1];
+    DartinoSdk.prototype = $desc;
+    DartinoSdk.$__fields__ = ["sdkRootPath"];
+    function SodSdk(sdkRootPath) {
+      this.sdkRootPath = sdkRootPath;
+      this.$deferredAction();
+    }
+    SodSdk.builtin$cls = "SodSdk";
+    if (!("name" in SodSdk))
+      SodSdk.name = "SodSdk";
+    $desc = $collectedClasses$.SodSdk[1];
+    SodSdk.prototype = $desc;
+    SodSdk.$__fields__ = ["sdkRootPath"];
     function disconnectDevices_closure() {
       this.$deferredAction();
     }
@@ -5087,7 +5116,7 @@ self._domRemove = function(element) {
     $desc = $collectedClasses$.FutureSerializer__serviceQueue_closure1[1];
     FutureSerializer__serviceQueue_closure1.prototype = $desc;
     FutureSerializer__serviceQueue_closure1.$__fields__ = ["$this"];
-    return [JS_CONST, Interceptor, JSBool, JSNull, JavaScriptObject, PlainJavaScriptObject, UnknownJavaScriptObject, JavaScriptFunction, JSArray, JSUnmodifiableArray, ArrayIterator, JSNumber, JSInt, JSDouble, JSString, startRootIsolate_closure, startRootIsolate_closure0, _Manager, _IsolateContext, _IsolateContext_handlePing_respond, _EventLoop, _EventLoop__runHelper_next, _IsolateEvent, _MainManagerStub, IsolateNatives__processWorkerMessage_closure, IsolateNatives__startIsolate_runStartFunction, _BaseSendPort, _NativeJsSendPort, _NativeJsSendPort_send_closure, _WorkerSendPort, RawReceivePortImpl, TimerImpl, TimerImpl_internalCallback, TimerImpl_internalCallback0, CapabilityImpl, _Serializer, _Deserializer, ConstantMapView, ConstantMap, ConstantStringMap, _ConstantMapKeyIterable, JSInvocationMirror, ReflectionInfo, Primitives_functionNoSuchMethod_closure, TypeErrorDecoder, NullError, JsNoSuchMethodError, UnknownJsTypeError, ExceptionAndStackTrace, unwrapException_saveStackTrace, _StackTrace, invokeClosure_closure, invokeClosure_closure0, invokeClosure_closure1, invokeClosure_closure2, invokeClosure_closure3, Closure, TearOffClosure, StaticClosure, BoundClosure, CastErrorImplementation, RuntimeError, RuntimeType, RuntimeFunctionType, DynamicRuntimeType, JsLinkedHashMap, JsLinkedHashMap_values_closure, LinkedHashMapCell, LinkedHashMapKeyIterable, LinkedHashMapKeyIterator, initHooks_closure, initHooks_closure0, initHooks_closure1, StringMatch, registerPackage_closure, registerPackage_closure0, registerPackage_closure1, registerPackage__closure, AtomPackage, Atom, CommandRegistry, CommandRegistry_add_closure, Config, NotificationManager, NotificationManager__options_closure, NotificationButton, NotificationButton_toProxy_closure, ViewRegistry, Workspace, Workspace_open_closure, Workspace_open__closure, PackageManager, TextEditor, BufferedProcess, BufferedProcess_create_closure, AtomEvent, _AtomEventCustomEvent, DartinoDevPackage, DartinoDevPackage__setupLogging_closure, disconnectDevices_closure, Device, Device_connect_closure, Device_disconnect_closure, Device__nextResult_closure, Device__nextResult_closure0, main_closure, ListIterable, ListIterator, MappedIterable, EfficientLengthMappedIterable, MappedIterator, MappedListIterable, FixedLengthListMixin, Symbol0, _AsyncRun__initializeScheduleImmediate_internalCallback, _AsyncRun__initializeScheduleImmediate_closure, _AsyncRun__scheduleImmediateJsOverride_internalCallback, _AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, _awaitOnObject_closure, _awaitOnObject_closure0, _wrapJsFunctionForAsync_closure, _BroadcastStream, _BroadcastSubscription, _BroadcastStreamController, _SyncBroadcastStreamController, _SyncBroadcastStreamController__sendData_closure, _SyncBroadcastStreamController__sendError_closure, _SyncBroadcastStreamController__sendDone_closure, _AsyncBroadcastStreamController, Future, closure0, Future_wait_handleError, Future_wait_closure, TimeoutException, _Completer, _AsyncCompleter, _SyncCompleter, _FutureListener, _Future, _Future__addListener_closure, _Future__prependListeners_closure, _Future__chainForeignFuture_closure, _Future__chainForeignFuture_closure0, _Future__chainForeignFuture_closure1, _Future__asyncComplete_closure, _Future__asyncComplete_closure0, _Future__asyncCompleteError_closure, _Future__propagateToListeners_handleValueCallback, _Future__propagateToListeners_handleError, _Future__propagateToListeners_handleWhenCompleteCallback, _Future__propagateToListeners_handleWhenCompleteCallback_closure, _Future_timeout_closure, _Future_timeout_closure0, _Future_timeout_closure1, _AsyncCallbackEntry, Stream, Stream_forEach_closure, Stream_forEach__closure, Stream_forEach__closure0, Stream_forEach_closure0, Stream_length_closure, Stream_length_closure0, Stream_toList_closure, Stream_toList_closure0, EventSink, _StreamController, _StreamController__subscribe_closure, _StreamController__recordCancel_complete, _SyncStreamControllerDispatch, _AsyncStreamControllerDispatch, _AsyncStreamController, _SyncStreamController, _ControllerStream, _ControllerSubscription, _EventSink, _BufferingStreamSubscription, _BufferingStreamSubscription__sendError_sendError, _BufferingStreamSubscription__sendDone_sendDone, _StreamImpl, _DelayedEvent, _DelayedData, _DelayedError, _DelayedDone, _PendingEvents, _PendingEvents_schedule_closure, _StreamImplEvents, _DoneStreamSubscription, _StreamIteratorImpl, _cancelAndError_closure, _cancelAndErrorClosure_closure, _ForwardingStream, _ForwardingStreamSubscription, _MapStream, _EventSinkWrapper, _SinkTransformerStreamSubscription, _BoundSinkStream, AsyncError, _Zone, _rootHandleUncaughtError_closure, _RootZone, _RootZone_bindCallback_closure, _RootZone_bindCallback_closure0, _HashMap, _IdentityHashMap, _HashMapKeyIterable, _HashMapKeyIterator, _LinkedIdentityHashMap, _LinkedHashSet, _LinkedHashSetCell, _LinkedHashSetIterator, _HashSetBase, ListMixin, _UnmodifiableMapMixin, MapView, UnmodifiableMapView, Maps_mapToString_closure, ListQueue, _ListQueueIterator, SetMixin, SetBase, _JsonMap, _JsonMap_values_closure, _JsonMapKeyIterable, _JsonDecoderSink, ChunkedConversionSink, _ConverterStreamEventSink, Codec, Converter, Converter_bind_closure, JsonUnsupportedObjectError, JsonCyclicError, JsonCodec, JsonEncoder, _JsonEncoderSink, JsonDecoder, _JsonStringifier, _JsonStringifier_writeMap_closure, _JsonStringStringifier, LineSplitter, _LineSplitterSink, _StringConversionSinkAsStringSinkAdapter, StringConversionSinkBase, StringConversionSinkMixin, _StringSinkConversionSink, _StringAdapterSink, NoSuchMethodError_toString_closure, bool, DateTime, $double, Duration, Duration_toString_sixDigits, Duration_toString_twoDigits, Error, NullThrownError, ArgumentError, RangeError, IndexError, NoSuchMethodError, UnsupportedError, UnimplementedError, StateError, ConcurrentModificationError, StackOverflowError, CyclicInitializationError, _Exception, FormatException, IntegerDivisionByZeroException, Expando, $int, Iterable, Iterator, List, Map, Null, num, Object, StackTrace, String, StringBuffer, Symbol, HtmlElement, AnchorElement, ApplicationCacheErrorEvent, AreaElement, Blob, BodyElement, ButtonElement, CharacterData, DeviceLightEvent, DivElement, DocumentFragment, DomError, DomException, DomRectReadOnly, Element, EmbedElement, ErrorEvent, Event, EventTarget, FieldSetElement, File, FormElement, IFrameElement, ImageData, ImageElement, InputElement, KeygenElement, LIElement, MapElement, MediaElement, MediaKeyEvent, MediaKeyMessageEvent, MetaElement, MeterElement, Navigator, NavigatorUserMediaError, Node, ObjectElement, OptionElement, OutputElement, ParamElement, PluginPlaceholderElement, PositionError, ProgressElement, SelectElement, SpeechRecognitionError, SpeechSynthesisEvent, TextAreaElement, Window, _Attr, _ClientRect, _DocumentType, _DomRect, _HTMLFrameSetElement, _DOMWindowCrossFrame, KeyRange, AElement, AltGlyphElement, AnimationElement, FEBlendElement, FEColorMatrixElement, FEComponentTransferElement, FECompositeElement, FEConvolveMatrixElement, FEDiffuseLightingElement, FEDisplacementMapElement, FEFloodElement, FEGaussianBlurElement, FEImageElement, FEMergeElement, FEMorphologyElement, FEOffsetElement, FESpecularLightingElement, FETileElement, FETurbulenceElement, FilterElement, GraphicsElement, ImageElement0, MarkerElement, MaskElement, PatternElement, ScriptElement0, SvgElement, SvgSvgElement, SymbolElement, TextContentElement, TextPathElement, TextPositioningElement, UseElement, ViewElement, _GradientElement, _SVGCursorElement, _SVGFEDropShadowElement, _SVGGlyphRefElement, _SVGMPathElement, SqlError, Capability, JsObject, JsObject__convertDataTree__convert, JsFunction, JsArray, JsObject_ListMixin, _convertToJS_closure, _convertToJS_closure0, _wrapToDart_closure, _wrapToDart_closure0, _wrapToDart_closure1, Uint8List, NativeByteBuffer, NativeTypedData, NativeByteData, NativeTypedArray, NativeTypedArrayOfDouble, NativeTypedArray_ListMixin, NativeTypedArray_ListMixin_FixedLengthListMixin, NativeTypedArrayOfInt, NativeTypedArray_ListMixin0, NativeTypedArray_ListMixin_FixedLengthListMixin0, NativeFloat32List, NativeFloat64List, NativeInt16List, NativeInt32List, NativeInt8List, NativeUint16List, NativeUint32List, NativeUint8ClampedList, NativeUint8List, Disposable, Disposables, promiseToFuture_closure, promiseToFuture_closure0, ProxyHolder, JsDisposable, Promise, Logger, closure, Level, LogRecord, FS, Process, ProcessRunner, ProcessRunner_execSimple_closure, ProcessRunner_execSimple_closure0, ProcessRunner_execSimple_closure1, ProcessRunner_execStreaming_closure2, ProcessRunner_execStreaming_closure1, ProcessRunner_execStreaming_closure, ProcessRunner_execStreaming_closure0, ProcessRunner_kill_closure, ProcessResult, FutureSerializer, FutureSerializer__serviceQueue_closure, FutureSerializer__serviceQueue_closure0, FutureSerializer__serviceQueue_closure1];
+    return [JS_CONST, Interceptor, JSBool, JSNull, JavaScriptObject, PlainJavaScriptObject, UnknownJavaScriptObject, JavaScriptFunction, JSArray, JSUnmodifiableArray, ArrayIterator, JSNumber, JSInt, JSDouble, JSString, startRootIsolate_closure, startRootIsolate_closure0, _Manager, _IsolateContext, _IsolateContext_handlePing_respond, _EventLoop, _EventLoop__runHelper_next, _IsolateEvent, _MainManagerStub, IsolateNatives__processWorkerMessage_closure, IsolateNatives__startIsolate_runStartFunction, _BaseSendPort, _NativeJsSendPort, _NativeJsSendPort_send_closure, _WorkerSendPort, RawReceivePortImpl, TimerImpl, TimerImpl_internalCallback, TimerImpl_internalCallback0, CapabilityImpl, _Serializer, _Deserializer, ConstantMapView, ConstantMap, ConstantStringMap, _ConstantMapKeyIterable, JSInvocationMirror, ReflectionInfo, Primitives_functionNoSuchMethod_closure, TypeErrorDecoder, NullError, JsNoSuchMethodError, UnknownJsTypeError, ExceptionAndStackTrace, unwrapException_saveStackTrace, _StackTrace, invokeClosure_closure, invokeClosure_closure0, invokeClosure_closure1, invokeClosure_closure2, invokeClosure_closure3, Closure, TearOffClosure, StaticClosure, BoundClosure, CastErrorImplementation, RuntimeError, RuntimeType, RuntimeFunctionType, DynamicRuntimeType, JsLinkedHashMap, JsLinkedHashMap_values_closure, LinkedHashMapCell, LinkedHashMapKeyIterable, LinkedHashMapKeyIterator, initHooks_closure, initHooks_closure0, initHooks_closure1, StringMatch, registerPackage_closure, registerPackage_closure0, registerPackage_closure1, registerPackage__closure, AtomPackage, Atom, CommandRegistry, CommandRegistry_add_closure, Config, NotificationManager, NotificationManager__options_closure, NotificationButton, NotificationButton_toProxy_closure, ViewRegistry, Workspace, Workspace_open_closure, Workspace_open__closure, PackageManager, TextEditor, BufferedProcess, BufferedProcess_create_closure, AtomEvent, _AtomEventCustomEvent, DartinoDevPackage, DartinoDevPackage__setupLogging_closure, Sdk, DartinoSdk, SodSdk, disconnectDevices_closure, Device, Device_connect_closure, Device_disconnect_closure, Device__nextResult_closure, Device__nextResult_closure0, main_closure, ListIterable, ListIterator, MappedIterable, EfficientLengthMappedIterable, MappedIterator, MappedListIterable, FixedLengthListMixin, Symbol0, _AsyncRun__initializeScheduleImmediate_internalCallback, _AsyncRun__initializeScheduleImmediate_closure, _AsyncRun__scheduleImmediateJsOverride_internalCallback, _AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, _awaitOnObject_closure, _awaitOnObject_closure0, _wrapJsFunctionForAsync_closure, _BroadcastStream, _BroadcastSubscription, _BroadcastStreamController, _SyncBroadcastStreamController, _SyncBroadcastStreamController__sendData_closure, _SyncBroadcastStreamController__sendError_closure, _SyncBroadcastStreamController__sendDone_closure, _AsyncBroadcastStreamController, Future, closure0, Future_wait_handleError, Future_wait_closure, TimeoutException, _Completer, _AsyncCompleter, _SyncCompleter, _FutureListener, _Future, _Future__addListener_closure, _Future__prependListeners_closure, _Future__chainForeignFuture_closure, _Future__chainForeignFuture_closure0, _Future__chainForeignFuture_closure1, _Future__asyncComplete_closure, _Future__asyncComplete_closure0, _Future__asyncCompleteError_closure, _Future__propagateToListeners_handleValueCallback, _Future__propagateToListeners_handleError, _Future__propagateToListeners_handleWhenCompleteCallback, _Future__propagateToListeners_handleWhenCompleteCallback_closure, _Future_timeout_closure, _Future_timeout_closure0, _Future_timeout_closure1, _AsyncCallbackEntry, Stream, Stream_forEach_closure, Stream_forEach__closure, Stream_forEach__closure0, Stream_forEach_closure0, Stream_length_closure, Stream_length_closure0, Stream_toList_closure, Stream_toList_closure0, EventSink, _StreamController, _StreamController__subscribe_closure, _StreamController__recordCancel_complete, _SyncStreamControllerDispatch, _AsyncStreamControllerDispatch, _AsyncStreamController, _SyncStreamController, _ControllerStream, _ControllerSubscription, _EventSink, _BufferingStreamSubscription, _BufferingStreamSubscription__sendError_sendError, _BufferingStreamSubscription__sendDone_sendDone, _StreamImpl, _DelayedEvent, _DelayedData, _DelayedError, _DelayedDone, _PendingEvents, _PendingEvents_schedule_closure, _StreamImplEvents, _DoneStreamSubscription, _StreamIteratorImpl, _cancelAndError_closure, _cancelAndErrorClosure_closure, _ForwardingStream, _ForwardingStreamSubscription, _MapStream, _EventSinkWrapper, _SinkTransformerStreamSubscription, _BoundSinkStream, AsyncError, _Zone, _rootHandleUncaughtError_closure, _RootZone, _RootZone_bindCallback_closure, _RootZone_bindCallback_closure0, _HashMap, _IdentityHashMap, _HashMapKeyIterable, _HashMapKeyIterator, _LinkedIdentityHashMap, _LinkedHashSet, _LinkedHashSetCell, _LinkedHashSetIterator, _HashSetBase, ListMixin, _UnmodifiableMapMixin, MapView, UnmodifiableMapView, Maps_mapToString_closure, ListQueue, _ListQueueIterator, SetMixin, SetBase, _JsonMap, _JsonMap_values_closure, _JsonMapKeyIterable, _JsonDecoderSink, ChunkedConversionSink, _ConverterStreamEventSink, Codec, Converter, Converter_bind_closure, JsonUnsupportedObjectError, JsonCyclicError, JsonCodec, JsonEncoder, _JsonEncoderSink, JsonDecoder, _JsonStringifier, _JsonStringifier_writeMap_closure, _JsonStringStringifier, LineSplitter, _LineSplitterSink, _StringConversionSinkAsStringSinkAdapter, StringConversionSinkBase, StringConversionSinkMixin, _StringSinkConversionSink, _StringAdapterSink, NoSuchMethodError_toString_closure, bool, DateTime, $double, Duration, Duration_toString_sixDigits, Duration_toString_twoDigits, Error, NullThrownError, ArgumentError, RangeError, IndexError, NoSuchMethodError, UnsupportedError, UnimplementedError, StateError, ConcurrentModificationError, StackOverflowError, CyclicInitializationError, _Exception, FormatException, IntegerDivisionByZeroException, Expando, $int, Iterable, Iterator, List, Map, Null, num, Object, StackTrace, String, StringBuffer, Symbol, HtmlElement, AnchorElement, ApplicationCacheErrorEvent, AreaElement, Blob, BodyElement, ButtonElement, CharacterData, DeviceLightEvent, DivElement, DocumentFragment, DomError, DomException, DomRectReadOnly, Element, EmbedElement, ErrorEvent, Event, EventTarget, FieldSetElement, File, FormElement, IFrameElement, ImageData, ImageElement, InputElement, KeygenElement, LIElement, MapElement, MediaElement, MediaKeyEvent, MediaKeyMessageEvent, MetaElement, MeterElement, Navigator, NavigatorUserMediaError, Node, ObjectElement, OptionElement, OutputElement, ParamElement, PluginPlaceholderElement, PositionError, ProgressElement, SelectElement, SpeechRecognitionError, SpeechSynthesisEvent, TextAreaElement, Window, _Attr, _ClientRect, _DocumentType, _DomRect, _HTMLFrameSetElement, _DOMWindowCrossFrame, KeyRange, AElement, AltGlyphElement, AnimationElement, FEBlendElement, FEColorMatrixElement, FEComponentTransferElement, FECompositeElement, FEConvolveMatrixElement, FEDiffuseLightingElement, FEDisplacementMapElement, FEFloodElement, FEGaussianBlurElement, FEImageElement, FEMergeElement, FEMorphologyElement, FEOffsetElement, FESpecularLightingElement, FETileElement, FETurbulenceElement, FilterElement, GraphicsElement, ImageElement0, MarkerElement, MaskElement, PatternElement, ScriptElement0, SvgElement, SvgSvgElement, SymbolElement, TextContentElement, TextPathElement, TextPositioningElement, UseElement, ViewElement, _GradientElement, _SVGCursorElement, _SVGFEDropShadowElement, _SVGGlyphRefElement, _SVGMPathElement, SqlError, Capability, JsObject, JsObject__convertDataTree__convert, JsFunction, JsArray, JsObject_ListMixin, _convertToJS_closure, _convertToJS_closure0, _wrapToDart_closure, _wrapToDart_closure0, _wrapToDart_closure1, Uint8List, NativeByteBuffer, NativeTypedData, NativeByteData, NativeTypedArray, NativeTypedArrayOfDouble, NativeTypedArray_ListMixin, NativeTypedArray_ListMixin_FixedLengthListMixin, NativeTypedArrayOfInt, NativeTypedArray_ListMixin0, NativeTypedArray_ListMixin_FixedLengthListMixin0, NativeFloat32List, NativeFloat64List, NativeInt16List, NativeInt32List, NativeInt8List, NativeUint16List, NativeUint32List, NativeUint8ClampedList, NativeUint8List, Disposable, Disposables, promiseToFuture_closure, promiseToFuture_closure0, ProxyHolder, JsDisposable, Promise, Logger, closure, Level, LogRecord, FS, Process, ProcessRunner, ProcessRunner_execSimple_closure, ProcessRunner_execSimple_closure0, ProcessRunner_execSimple_closure1, ProcessRunner_execStreaming_closure2, ProcessRunner_execStreaming_closure1, ProcessRunner_execStreaming_closure, ProcessRunner_execStreaming_closure0, ProcessRunner_kill_closure, ProcessResult, FutureSerializer, FutureSerializer__serviceQueue_closure, FutureSerializer__serviceQueue_closure0, FutureSerializer__serviceQueue_closure1];
   };
   function setupProgram(programData, typesOffset) {
     "use strict";
@@ -5740,6 +5769,20 @@ self._domRemove = function(element) {
             receiver[start + i] = iterable[t1];
           }
       },
+      lastIndexOf$2: function(receiver, element, startIndex) {
+        var i;
+        startIndex = receiver.length - 1;
+        for (i = startIndex; i >= 0; --i) {
+          if (i >= receiver.length)
+            return H.ioore(receiver, i);
+          if (J.$eq$(receiver[i], element))
+            return i;
+        }
+        return -1;
+      },
+      lastIndexOf$1: function($receiver, element) {
+        return this.lastIndexOf$2($receiver, element, null);
+      },
       toString$0: function(receiver) {
         return P.IterableBase_iterableToFullString(receiver, "[", "]");
       },
@@ -5827,6 +5870,11 @@ self._domRemove = function(element) {
       },
       get$hashCode: function(receiver) {
         return receiver & 0x1FFFFFFF;
+      },
+      $add: function(receiver, other) {
+        if (typeof other !== "number")
+          throw H.wrapException(H.argumentErrorValue(other));
+        return receiver + other;
       },
       $sub: function(receiver, other) {
         if (typeof other !== "number")
@@ -5922,6 +5970,11 @@ self._domRemove = function(element) {
           if (this.codeUnitAt$1(string, start + i) !== this.codeUnitAt$1(receiver, i))
             return;
         return new H.StringMatch(start, string, receiver);
+      },
+      $add: function(receiver, other) {
+        if (typeof other !== "string")
+          throw H.wrapException(P.ArgumentError$value(other, null, null));
+        return receiver + other;
       },
       endsWith$1: function(receiver, other) {
         var otherLength, t1;
@@ -8935,7 +8988,7 @@ self._domRemove = function(element) {
       t1.$indexSet(exports, "activate", new E.registerPackage_closure());
       t1.$indexSet(exports, "deactivate", new E.registerPackage_closure0());
       $._package.toString;
-      t1.$indexSet(exports, "config", K.jsify(P.LinkedHashMap__makeLiteral(["devicePath", P.LinkedHashMap__makeLiteral(["title", "Device path.", "description", "The /dev/tty* path for accessing a connected device.", "type", "string", "default", "", "order", 1]), "sodPath", P.LinkedHashMap__makeLiteral(["title", "SOD root directory.", "description", "The directory in which https://github.com/domokit/sod has been checked out and built.", "type", "string", "default", "", "order", 1]), "logging", P.LinkedHashMap__makeLiteral(["title", "Log plugin diagnostics to the devtools console.", "description", "This is for plugin development only!", "type", "string", "default", "info", "enum", ["error", "warning", "info", "fine", "finer"], "order", 3])])));
+      t1.$indexSet(exports, "config", K.jsify(P.LinkedHashMap__makeLiteral(["devicePath", P.LinkedHashMap__makeLiteral(["title", "Device path.", "description", "The /dev/tty* path for accessing a connected device.", "type", "string", "default", "", "order", 1]), "sodPath", P.LinkedHashMap__makeLiteral(["title", "SOD root directory.", "description", "The directory in which https://github.com/domokit/sod has been checked out and built.", "type", "string", "default", "", "order", 2]), "dartinoPath", P.LinkedHashMap__makeLiteral(["title", "Dartino root directory.", "description", "The directory in which http://dartino.github.io/sdk/ has been downloaded and unzipped.", "type", "string", "default", "", "order", 2]), "logging", P.LinkedHashMap__makeLiteral(["title", "Log plugin diagnostics to the devtools console.", "description", "This is for plugin development only!", "type", "string", "default", "info", "enum", ["error", "warning", "info", "fine", "finer"], "order", 3])])));
       t1.$indexSet(exports, "serialize", $._package.get$serialize());
       $package._registeredMethods.forEach$1(0, new E.registerPackage_closure1(exports));
       $package._registeredMethods = null;
@@ -8962,7 +9015,7 @@ self._domRemove = function(element) {
           t1 = t1._plugin$_disposables;
           t2 = $.$get$atom();
           t1 = t1._disposables;
-          t1.push(t2._commands.add$3(0, "atom-workspace", "dartino:settings", U.plugin___openDartinoSettings$closure()));
+          t1.push(t2._commands.add$3(0, "atom-workspace", "dartino:settings", U.plugin__openDartinoSettings$closure()));
           t1.push(t2._commands.add$3(0, "atom-workspace", "dartino:run-app-on-device", U.plugin___runAppOnDevice$closure()));
         } catch (exception) {
           t1 = H.unwrapException(exception);
@@ -9195,19 +9248,11 @@ self._domRemove = function(element) {
     }
   }], ["atom.dartino.plugin", "package:atom_dartino/dartino.dart",, U, {
     "^": "",
-    _openDartinoSettings: [function(_) {
+    openDartinoSettings: [function(_) {
       $.$get$atom()._workspace.open$1(0, "atom://config/packages/dartino");
     }, function() {
-      return U._openDartinoSettings(null);
-    }, "call$1", "call$0", "plugin___openDartinoSettings$closure", 0, 2, 30, 2, 4],
-    _checkSodFile: function(sodPath, relPath) {
-      var t1 = $.$get$fs();
-      if (t1.invoke$2("existsSync", t1.join$2(0, sodPath, relPath)) === true)
-        return true;
-      t1 = $.$get$atom()._notifications;
-      t1.invoke$3("addError", "Invalid SOD directory specified.", t1._options$5$buttons$description$detail$dismissable$icon([new E.NotificationButton("Open settings", U.plugin___openDartinoSettings$closure())], null, 'Could not find "' + relPath + '" in\n' + H.S(sodPath) + ".\nPlease build SOD and set the SOD path in\nSettings > Packages > dartino > SOD root directory", true, null));
-      return false;
-    },
+      return U.openDartinoSettings(null);
+    }, "call$1", "call$0", "plugin__openDartinoSettings$closure", 0, 2, 30, 2, 4],
     _findPortName: function() {
       var $async$goto = 0, $async$completer = new P.Completer_Completer$sync(), $async$returnValue, $async$handler = 2, $async$currentError, t1, portName, portNames, t2, count;
       var $async$_findPortName = P._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
@@ -9280,85 +9325,8 @@ self._domRemove = function(element) {
       }
       return true;
     },
-    _rebuildSnap: function(srcPath) {
-      var $async$goto = 0, $async$completer = new P.Completer_Completer$sync(), $async$returnValue, $async$handler = 2, $async$currentError, t1, dstPath, sodPath, t2, t3, t4, t5, processResult, stdout;
-      var $async$_rebuildSnap = P._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
-        if ($async$errorCode === 1) {
-          $async$currentError = $async$result;
-          $async$goto = $async$handler;
-        }
-        while (true)
-          switch ($async$goto) {
-            case 0:
-              // Function start
-              t1 = J.getInterceptor$asx(srcPath);
-              dstPath = t1.substring$2(srcPath, 0, J.$sub$n(t1.get$length(srcPath), 5)) + ".snap";
-              t1 = $.$get$atom();
-              sodPath = t1._config.getValue$1("dartino.sodPath");
-              if (sodPath == null || J.trim$0$s(sodPath).length === 0) {
-                t1 = t1._notifications;
-                t1.invoke$3("addError", "No SOD path specified.", t1._options$5$buttons$description$detail$dismissable$icon([new E.NotificationButton("Open settings", U.plugin___openDartinoSettings$closure())], null, "Please set the SOD path in\nSettings > Packages > dartino > SOD root directory", true, null));
-                // goto return
-                $async$goto = 1;
-                break;
-              } else
-                ;
-              if (!U._checkSodFile(sodPath, "makefile")) {
-                // goto return
-                $async$goto = 1;
-                break;
-              } else
-                ;
-              t2 = $.$get$fs();
-              if (!U._checkSodFile(sodPath, t2.join$2(0, "third_party", "dartino"))) {
-                // goto return
-                $async$goto = 1;
-                break;
-              } else
-                ;
-              if (!U._checkSodFile(sodPath, t2.join$2(0, "third_party", "lk"))) {
-                // goto return
-                $async$goto = 1;
-                break;
-              } else
-                ;
-              t2 = H.setRuntimeTypeInfo(new P._AsyncCompleter(H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null])), [null]);
-              t3 = P.StreamController_StreamController(null, null, null, null, false, null);
-              t4 = P.StreamController_StreamController(null, null, null, null, false, null);
-              t5 = t1._notifications;
-              t5.invoke$3("addInfo", "Building application...", t5._options$5$buttons$description$detail$dismissable$icon(null, null, dstPath, true, null));
-              $async$goto = 3;
-              return P._asyncHelper(new X.ProcessRunner("make", [dstPath], sodPath, null, null, t2, null, t3, t4).execSimple$0(), $async$_rebuildSnap, $async$completer);
-            case 3:
-              // returning from await.
-              processResult = $async$result;
-              stdout = processResult.get$stdout();
-              if (!J.$eq$(processResult.get$exit(), 0)) {
-                t1 = t1._notifications;
-                t1.invoke$3("addError", "Failed to build the app", t1._options$5$buttons$description$detail$dismissable$icon(null, null, "exit code " + H.S(processResult.get$exit()) + "\n" + stdout + "\n" + processResult.get$stderr(), true, null));
-                // goto return
-                $async$goto = 1;
-                break;
-              } else
-                ;
-              t1 = t1._notifications;
-              t1.invoke$3("addSuccess", "Build successful.", t1._options$5$buttons$description$detail$dismissable$icon(null, null, null, true, null));
-              $async$returnValue = dstPath;
-              // goto return
-              $async$goto = 1;
-              break;
-            case 1:
-              // return
-              return P._asyncHelper($async$returnValue, 0, $async$completer, null);
-            case 2:
-              // rethrow
-              return P._asyncHelper($async$currentError, 1, $async$completer);
-          }
-      });
-      return P._asyncHelper(null, $async$_rebuildSnap, $async$completer, null);
-    },
     _runAppOnDevice: [function($event) {
-      var $async$goto = 0, $async$completer = new P.Completer_Completer$sync(), $async$returnValue, $async$handler = 2, $async$currentError, t1, result, srcPath, dstPath, portName;
+      var $async$goto = 0, $async$completer = new P.Completer_Completer$sync(), $async$returnValue, $async$handler = 2, $async$currentError, t1, result, srcPath, sdk, dstPath, portName;
       var $async$_runAppOnDevice = P._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
         if ($async$errorCode === 1) {
           $async$currentError = $async$result;
@@ -9371,15 +9339,26 @@ self._domRemove = function(element) {
               t1 = $.$get$atom();
               result = t1._workspace.invoke$1("getActiveTextEditor");
               srcPath = (result == null ? null : new E.TextEditor(E._cvt(result))).invoke$1("getPath");
+              $async$goto = 3;
+              return P._asyncHelper(D.findSdk(srcPath), $async$_runAppOnDevice, $async$completer);
+            case 3:
+              // returning from await.
+              sdk = $async$result;
+              if (sdk == null) {
+                // goto return
+                $async$goto = 1;
+                break;
+              } else
+                ;
               if (!U._isLaunchable(srcPath)) {
                 // goto return
                 $async$goto = 1;
                 break;
               } else
                 ;
-              $async$goto = 3;
-              return P._asyncHelper(U._rebuildSnap(srcPath), $async$_runAppOnDevice, $async$completer);
-            case 3:
+              $async$goto = 4;
+              return P._asyncHelper(sdk.compile$1(srcPath), $async$_runAppOnDevice, $async$completer);
+            case 4:
               // returning from await.
               dstPath = $async$result;
               if (dstPath == null) {
@@ -9388,9 +9367,9 @@ self._domRemove = function(element) {
                 break;
               } else
                 ;
-              $async$goto = 4;
+              $async$goto = 5;
               return P._asyncHelper(U._findPortName(), $async$_runAppOnDevice, $async$completer);
-            case 4:
+            case 5:
               // returning from await.
               portName = $async$result;
               if (portName == null) {
@@ -9399,9 +9378,9 @@ self._domRemove = function(element) {
                 break;
               } else
                 ;
-              $async$goto = 5;
-              return P._asyncHelper(R.sendDeviceCmd(portName, "run", P.LinkedHashMap__makeLiteral(["path", dstPath])), $async$_runAppOnDevice, $async$completer);
-            case 5:
+              $async$goto = 6;
+              return P._asyncHelper(sdk.deployAndRun$2(portName, dstPath), $async$_runAppOnDevice, $async$completer);
+            case 6:
               // returning from await.
               if ($async$result === true) {
                 t1 = t1._notifications;
@@ -9442,6 +9421,368 @@ self._domRemove = function(element) {
         }
         this.$this._logger.info$1("logging level: " + H.S($.$get$Logger_root().get$level()));
       }, null, null, 2, 0, null, 19, "call"]
+    }
+  }], ["atom.dartino.sdk", "package:atom_dartino/sdk/sdk.dart",, D, {
+    "^": "",
+    findSdk: function(srcPath) {
+      var $async$goto = 0, $async$completer = new P.Completer_Completer$sync(), $async$returnValue, $async$handler = 2, $async$currentError, t1, dartinoPath, sdk, sodPath;
+      var $async$findSdk = P._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1) {
+          $async$currentError = $async$result;
+          $async$goto = $async$handler;
+        }
+        while (true)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              t1 = $.$get$atom();
+              dartinoPath = t1._config.getValue$1("dartino.dartinoPath");
+              sdk = dartinoPath != null && J.trim$0$s(dartinoPath).length !== 0 ? new R.DartinoSdk(dartinoPath) : null;
+              sodPath = t1._config.getValue$1("dartino.sodPath");
+              if (sodPath != null && J.trim$0$s(sodPath).length !== 0)
+                sdk = new T.SodSdk(sodPath);
+              else
+                ;
+              if (sdk == null) {
+                t1 = t1._notifications;
+                t1.invoke$3("addError", "No SOD or Dartino path specified.", t1._options$5$buttons$description$detail$dismissable$icon([new E.NotificationButton("Open settings", U.plugin__openDartinoSettings$closure())], null, "Please download SOD or Dartino and set the path in\nSettings > Packages > dartino > SOD root directory.\nSee Dartino settings for more information.", true, null));
+                // goto return
+                $async$goto = 1;
+                break;
+              } else
+                ;
+              $async$goto = 3;
+              return P._asyncHelper(sdk.verifyInstall$0(), $async$findSdk, $async$completer);
+            case 3:
+              // returning from await.
+              $async$returnValue = $async$result === true ? sdk : null;
+              // goto return
+              $async$goto = 1;
+              break;
+            case 1:
+              // return
+              return P._asyncHelper($async$returnValue, 0, $async$completer, null);
+            case 2:
+              // rethrow
+              return P._asyncHelper($async$currentError, 1, $async$completer);
+          }
+      });
+      return P._asyncHelper(null, $async$findSdk, $async$completer, null);
+    },
+    Sdk: {
+      "^": "Object;"
+    }
+  }], ["atom.dartino.sdk.dartino", "package:atom_dartino/sdk/dartino_sdk.dart",, R, {
+    "^": "",
+    DartinoSdk: {
+      "^": "Sdk;sdkRootPath",
+      compile$1: function(srcPath) {
+        var $async$goto = 0, $async$completer = new P.Completer_Completer$sync(), $async$returnValue, $async$handler = 2, $async$currentError, $async$self = this, t1, t2, t3, srcDir, dstPath, buildScript, t4, t5, t6, processResult, stdout;
+        var $async$compile$1 = P._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+          if ($async$errorCode === 1) {
+            $async$currentError = $async$result;
+            $async$goto = $async$handler;
+          }
+          while (true)
+            switch ($async$goto) {
+              case 0:
+                // Function start
+                t1 = $.$get$fs();
+                t2 = t1.separator;
+                t3 = J.getInterceptor$asx(srcPath);
+                srcDir = t3.substring$2(srcPath, 0, t3.lastIndexOf$1(srcPath, t2));
+                dstPath = t3.substring$2(srcPath, 0, J.$sub$n(t3.get$length(srcPath), 5)) + ".bin";
+                H.checkString(t2);
+                buildScript = J.$add$ns($async$self.sdkRootPath, H.stringReplaceAllUnchecked("/platforms/stm32f746g-discovery/bin/build.sh", "/", t2));
+                t2 = H.setRuntimeTypeInfo(new P._AsyncCompleter(H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null])), [null]);
+                t3 = P.StreamController_StreamController(null, null, null, null, false, null);
+                t4 = P.StreamController_StreamController(null, null, null, null, false, null);
+                t5 = $.$get$atom();
+                t6 = t5._notifications;
+                t6.invoke$3("addInfo", "Building application...", t6._options$5$buttons$description$detail$dismissable$icon(null, null, srcPath, true, null));
+                $async$goto = 3;
+                return P._asyncHelper(new X.ProcessRunner(buildScript, [srcPath], srcDir, null, null, t2, null, t3, t4).execSimple$0(), $async$compile$1, $async$completer);
+              case 3:
+                // returning from await.
+                processResult = $async$result;
+                stdout = processResult.get$stdout();
+                if (!J.$eq$(processResult.get$exit(), 0)) {
+                  t1 = t5._notifications;
+                  t1.invoke$3("addError", "Failed to build the app", t1._options$5$buttons$description$detail$dismissable$icon(null, null, "exit code " + H.S(processResult.get$exit()) + "\n" + stdout + "\n" + processResult.get$stderr(), true, null));
+                  // goto return
+                  $async$goto = 1;
+                  break;
+                } else
+                  ;
+                if (t1.invoke$2("existsSync", dstPath) !== true) {
+                  t1 = t5._notifications;
+                  t1.invoke$3("addError", "Failed to build the app", t1._options$5$buttons$description$detail$dismissable$icon(null, null, "Expected build to generate " + dstPath, true, null));
+                  // goto return
+                  $async$goto = 1;
+                  break;
+                } else
+                  ;
+                t1 = t5._notifications;
+                t1.invoke$3("addSuccess", "Build successful.", t1._options$5$buttons$description$detail$dismissable$icon(null, null, null, true, null));
+                $async$returnValue = dstPath;
+                // goto return
+                $async$goto = 1;
+                break;
+              case 1:
+                // return
+                return P._asyncHelper($async$returnValue, 0, $async$completer, null);
+              case 2:
+                // rethrow
+                return P._asyncHelper($async$currentError, 1, $async$completer);
+            }
+        });
+        return P._asyncHelper(null, $async$compile$1, $async$completer, null);
+      },
+      deployAndRun$2: function(deviceName, dstPath) {
+        var $async$goto = 0, $async$completer = new P.Completer_Completer$sync(), $async$returnValue, $async$handler = 2, $async$currentError, t1, result;
+        var $async$deployAndRun$2 = P._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+          if ($async$errorCode === 1) {
+            $async$currentError = $async$result;
+            $async$goto = $async$handler;
+          }
+          while (true)
+            switch ($async$goto) {
+              case 0:
+                // Function start
+                $async$goto = $.$get$isMac() === true ? 3 : 4;
+                break;
+              case 3:
+                // then
+                if ($.$get$fs().invoke$2("existsSync", "/Volumes/DIS_F746NG/MBED.HTM") !== true) {
+                  t1 = $.$get$atom()._notifications;
+                  t1.invoke$3("addError", "Cannot find connected device.", t1._options$5$buttons$description$detail$dismissable$icon(null, null, "/Volumes/DIS_F746NG/MBED.HTM", true, null));
+                  $async$returnValue = false;
+                  // goto return
+                  $async$goto = 1;
+                  break;
+                } else
+                  ;
+                $async$goto = 5;
+                return P._asyncHelper(new X.ProcessRunner("cp", [dstPath, "/Volumes/DIS_F746NG"], null, null, null, H.setRuntimeTypeInfo(new P._AsyncCompleter(H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null])), [null]), null, P.StreamController_StreamController(null, null, null, null, false, null), P.StreamController_StreamController(null, null, null, null, false, null)).execSimple$0(), $async$deployAndRun$2, $async$completer);
+              case 5:
+                // returning from await.
+                result = $async$result;
+                if (!J.$eq$(result.get$exit(), 0)) {
+                  t1 = $.$get$atom()._notifications;
+                  t1.invoke$3("addError", "Failed to deploy app to device.", t1._options$5$buttons$description$detail$dismissable$icon(null, null, "Device /Volumes/DIS_F746NG\nexit code " + H.S(result.get$exit()) + "\n" + result.get$stdout() + "\n" + result.get$stderr() + "\n", true, null));
+                  $async$returnValue = false;
+                  // goto return
+                  $async$goto = 1;
+                  break;
+                } else
+                  ;
+                $async$returnValue = true;
+                // goto return
+                $async$goto = 1;
+                break;
+              case 4:
+                // join
+                if ($.$get$isLinux() === true)
+                  ;
+                else
+                  ;
+                if ($.$get$isWindows() === true)
+                  ;
+                else
+                  ;
+                t1 = $.$get$atom()._notifications;
+                t1.invoke$3("addError", "OS not supported yet.", t1._options$5$buttons$description$detail$dismissable$icon(null, null, null, true, null));
+                $async$returnValue = false;
+                // goto return
+                $async$goto = 1;
+                break;
+              case 1:
+                // return
+                return P._asyncHelper($async$returnValue, 0, $async$completer, null);
+              case 2:
+                // rethrow
+                return P._asyncHelper($async$currentError, 1, $async$completer);
+            }
+        });
+        return P._asyncHelper(null, $async$deployAndRun$2, $async$completer, null);
+      },
+      verifyInstall$0: function() {
+        var $async$goto = 0, $async$completer = new P.Completer_Completer$sync(), $async$returnValue, $async$handler = 2, $async$currentError, $async$self = this, t1, t2, t3, t4, t5, t6, processResult, stdout;
+        var $async$verifyInstall$0 = P._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+          if ($async$errorCode === 1) {
+            $async$currentError = $async$result;
+            $async$goto = $async$handler;
+          }
+          while (true)
+            switch ($async$goto) {
+              case 0:
+                // Function start
+                t1 = $async$self.sdkRootPath;
+                if (!F.checkSdkFile("Dartino", t1, ["platforms/stm32f746g-discovery/bin/build.sh"], "Please download the SDK set the Dartino SDK path in\nSettings > Packages > dartino > Dartino root directory")) {
+                  $async$returnValue = false;
+                  // goto return
+                  $async$goto = 1;
+                  break;
+                } else
+                  ;
+                t2 = $.$get$fs();
+                t3 = t2.separator;
+                H.checkString(t3);
+                if (t2.invoke$2("existsSync", t2.join$2(0, t1, H.stringReplaceAllUnchecked("tools/gcc-arm-embedded/bin/arm-none-eabi-gcc", "/", t3))) === true) {
+                  $async$returnValue = true;
+                  // goto return
+                  $async$goto = 1;
+                  break;
+                } else
+                  ;
+                t2 = H.setRuntimeTypeInfo(new P._AsyncCompleter(H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null])), [null]);
+                t3 = P.StreamController_StreamController(null, null, null, null, false, null);
+                t4 = P.StreamController_StreamController(null, null, null, null, false, null);
+                t5 = $.$get$atom();
+                t6 = t5._notifications;
+                t6.invoke$3("addInfo", "Downloading additional Dartino tools...", t6._options$5$buttons$description$detail$dismissable$icon(null, null, "into " + H.S(t1), true, null));
+                $async$goto = 3;
+                return P._asyncHelper(new X.ProcessRunner("bin/dartino", ["x-download-tools"], t1, null, null, t2, null, t3, t4).execSimple$0(), $async$verifyInstall$0, $async$completer);
+              case 3:
+                // returning from await.
+                processResult = $async$result;
+                stdout = processResult.get$stdout();
+                if (!J.$eq$(processResult.get$exit(), 0)) {
+                  t2 = t5._notifications;
+                  t2.invoke$3("addError", "Failed to download additional tools", t2._options$5$buttons$description$detail$dismissable$icon(null, null, "Please run  bin/dartino x-download-tools\nfrom " + H.S(t1) + "\n-----\nexit code " + H.S(processResult.get$exit()) + "\n" + stdout + "\n" + processResult.get$stderr(), true, null));
+                  $async$returnValue = false;
+                  // goto return
+                  $async$goto = 1;
+                  break;
+                } else
+                  ;
+                $async$returnValue = true;
+                // goto return
+                $async$goto = 1;
+                break;
+              case 1:
+                // return
+                return P._asyncHelper($async$returnValue, 0, $async$completer, null);
+              case 2:
+                // rethrow
+                return P._asyncHelper($async$currentError, 1, $async$completer);
+            }
+        });
+        return P._asyncHelper(null, $async$verifyInstall$0, $async$completer, null);
+      }
+    }
+  }], ["atom.dartino.sdk.sod", "package:atom_dartino/sdk/sod_sdk.dart",, T, {
+    "^": "",
+    SodSdk: {
+      "^": "Sdk;sdkRootPath",
+      compile$1: function(srcPath) {
+        var $async$goto = 0, $async$completer = new P.Completer_Completer$sync(), $async$returnValue, $async$handler = 2, $async$currentError, $async$self = this, t1, dstPath, t2, t3, t4, t5, processResult, stdout;
+        var $async$compile$1 = P._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+          if ($async$errorCode === 1) {
+            $async$currentError = $async$result;
+            $async$goto = $async$handler;
+          }
+          while (true)
+            switch ($async$goto) {
+              case 0:
+                // Function start
+                t1 = J.getInterceptor$asx(srcPath);
+                dstPath = t1.substring$2(srcPath, 0, J.$sub$n(t1.get$length(srcPath), 5)) + ".snap";
+                t1 = H.setRuntimeTypeInfo(new P._AsyncCompleter(H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null])), [null]);
+                t2 = P.StreamController_StreamController(null, null, null, null, false, null);
+                t3 = P.StreamController_StreamController(null, null, null, null, false, null);
+                t4 = $.$get$atom();
+                t5 = t4._notifications;
+                t5.invoke$3("addInfo", "Building application...", t5._options$5$buttons$description$detail$dismissable$icon(null, null, dstPath, true, null));
+                $async$goto = 3;
+                return P._asyncHelper(new X.ProcessRunner("make", [dstPath], $async$self.sdkRootPath, null, null, t1, null, t2, t3).execSimple$0(), $async$compile$1, $async$completer);
+              case 3:
+                // returning from await.
+                processResult = $async$result;
+                stdout = processResult.get$stdout();
+                if (!J.$eq$(processResult.get$exit(), 0)) {
+                  t1 = t4._notifications;
+                  t1.invoke$3("addError", "Failed to build the app", t1._options$5$buttons$description$detail$dismissable$icon(null, null, "exit code " + H.S(processResult.get$exit()) + "\n" + stdout + "\n" + processResult.get$stderr(), true, null));
+                  // goto return
+                  $async$goto = 1;
+                  break;
+                } else
+                  ;
+                t1 = t4._notifications;
+                t1.invoke$3("addSuccess", "Build successful.", t1._options$5$buttons$description$detail$dismissable$icon(null, null, null, true, null));
+                $async$returnValue = dstPath;
+                // goto return
+                $async$goto = 1;
+                break;
+              case 1:
+                // return
+                return P._asyncHelper($async$returnValue, 0, $async$completer, null);
+              case 2:
+                // rethrow
+                return P._asyncHelper($async$currentError, 1, $async$completer);
+            }
+        });
+        return P._asyncHelper(null, $async$compile$1, $async$completer, null);
+      },
+      deployAndRun$2: function(deviceName, dstPath) {
+        return R.sendDeviceCmd(deviceName, "run", P.LinkedHashMap__makeLiteral(["path", dstPath]));
+      },
+      verifyInstall$0: function() {
+        var $async$goto = 0, $async$completer = new P.Completer_Completer$sync(), $async$returnValue, $async$handler = 2, $async$currentError, $async$self = this, t1;
+        var $async$verifyInstall$0 = P._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+          if ($async$errorCode === 1) {
+            $async$currentError = $async$result;
+            $async$goto = $async$handler;
+          }
+          while (true)
+            switch ($async$goto) {
+              case 0:
+                // Function start
+                t1 = $async$self.sdkRootPath;
+                if (!F.checkSdkFile("SOD", t1, ["makefile", "third_party/openocd/README.md"], "Please use gclient to install SOD and set the SOD path in\nSettings > Packages > dartino > SOD root directory")) {
+                  $async$returnValue = false;
+                  // goto return
+                  $async$goto = 1;
+                  break;
+                } else
+                  ;
+                if (!F.checkSdkFile("SOD", t1, ["third_party/lk/platform/stm32f7xx/init.c"], "It appears that SOD was install using git clone rather than gclient.\nPlease use gclient to install SOD as per SOD build instructions")) {
+                  $async$returnValue = false;
+                  // goto return
+                  $async$goto = 1;
+                  break;
+                } else
+                  ;
+                $async$returnValue = true;
+                // goto return
+                $async$goto = 1;
+                break;
+              case 1:
+                // return
+                return P._asyncHelper($async$returnValue, 0, $async$completer, null);
+              case 2:
+                // rethrow
+                return P._asyncHelper($async$currentError, 1, $async$completer);
+            }
+        });
+        return P._asyncHelper(null, $async$verifyInstall$0, $async$completer, null);
+      }
+    }
+  }], ["atom.dartino.sdk.util", "package:atom_dartino/sdk/sdk_util.dart",, F, {
+    "^": "",
+    checkSdkFile: function(sdkName, sdkPath, relPaths, suggestion) {
+      var t1, _i, relPath, t2;
+      for (t1 = relPaths.length, _i = 0; _i < relPaths.length; relPaths.length === t1 || (0, H.throwConcurrentModificationError)(relPaths), ++_i) {
+        relPath = relPaths[_i];
+        t2 = $.$get$fs();
+        relPath = C.JSString_methods.replaceAll$2(relPath, "/", t2.separator);
+        if (t2.invoke$2("existsSync", t2.join$2(0, sdkPath, relPath)) !== true) {
+          t1 = $.$get$atom()._notifications;
+          t1.invoke$3("addError", "Invalid " + sdkName + " directory specified.", t1._options$5$buttons$description$detail$dismissable$icon([new E.NotificationButton("Open settings", U.plugin__openDartinoSettings$closure())], null, 'Could not find "' + relPath + '" in\n' + H.S(sdkPath) + ".\n" + suggestion, true, null));
+          return false;
+        }
+      }
+      return true;
     }
   }], ["atom.dartino.usb", "package:atom_dartino/usb.dart",, R, {
     "^": "",
@@ -13195,6 +13536,17 @@ self._domRemove = function(element) {
         this.set$length(receiver, t1 + 1);
         this.$indexSet(receiver, t1, element);
       },
+      lastIndexOf$2: function(receiver, element, startIndex) {
+        var i;
+        startIndex = this.get$length(receiver) - 1;
+        for (i = startIndex; i >= 0; --i)
+          if (J.$eq$(this.$index(receiver, i), element))
+            return i;
+        return -1;
+      },
+      lastIndexOf$1: function($receiver, element) {
+        return this.lastIndexOf$2($receiver, element, null);
+      },
       toString$0: function(receiver) {
         return P.IterableBase_iterableToFullString(receiver, "[", "]");
       },
@@ -14291,6 +14643,9 @@ self._domRemove = function(element) {
     "+double": 0,
     Duration: {
       "^": "Object;_duration",
+      $add: function(_, other) {
+        return new P.Duration(C.JSInt_methods.$add(this._duration, other.get$_duration()));
+      },
       $tdiv: function(_, quotient) {
         if (quotient === 0)
           throw H.wrapException(new P.IntegerDivisionByZeroException());
@@ -14392,6 +14747,9 @@ self._domRemove = function(element) {
       static: {
         ArgumentError$: function(message) {
           return new P.ArgumentError(false, null, null, message);
+        },
+        ArgumentError$value: function(value, $name, message) {
+          return new P.ArgumentError(true, value, $name, message);
         }
       }
     },
@@ -16231,7 +16589,10 @@ self._domRemove = function(element) {
   }], ["node.process", "package:atom/node/process.dart",, X, {
     "^": "",
     Process: {
-      "^": "ProxyHolder;obj"
+      "^": "ProxyHolder;obj",
+      get$platform: function(_) {
+        return J.$index$asx(this.obj, "platform");
+      }
     },
     ProcessRunner: {
       "^": "Object;command,args,cwd,env,_process,_exitCompleter,_exit,_stdoutController,_stderrController",
@@ -16457,6 +16818,17 @@ self._domRemove = function(element) {
       return J.UnknownJavaScriptObject.prototype;
     return receiver;
   };
+  J.getInterceptor$ns = function(receiver) {
+    if (typeof receiver == "number")
+      return J.JSNumber.prototype;
+    if (typeof receiver == "string")
+      return J.JSString.prototype;
+    if (receiver == null)
+      return receiver;
+    if (!(receiver instanceof P.Object))
+      return J.UnknownJavaScriptObject.prototype;
+    return receiver;
+  };
   J.getInterceptor$s = function(receiver) {
     if (typeof receiver == "string")
       return J.JSString.prototype;
@@ -16501,6 +16873,11 @@ self._domRemove = function(element) {
   };
   J.get$value$x = function(receiver) {
     return J.getInterceptor$x(receiver).get$value(receiver);
+  };
+  J.$add$ns = function(receiver, a0) {
+    if (typeof receiver == "number" && typeof a0 == "number")
+      return receiver + a0;
+    return J.getInterceptor$ns(receiver).$add(receiver, a0);
   };
   J.$ge$n = function(receiver, a0) {
     if (typeof receiver == "number" && typeof a0 == "number")
@@ -16914,8 +17291,14 @@ self._domRemove = function(element) {
   }, "fs", "process", "$get$process", function() {
     return new X.Process(Y.require("process"));
   }, "process", "isWindows", "$get$isWindows", function() {
-    return J.startsWith$1$s(J.$index$asx($.$get$process().obj, "platform"), "win");
-  }, "isWindows"]);
+    var t1 = $.$get$process();
+    return J.startsWith$1$s(t1.get$platform(t1), "win");
+  }, "isWindows", "isMac", "$get$isMac", function() {
+    var t1 = $.$get$process();
+    return J.$eq$(t1.get$platform(t1), "darwin");
+  }, "isMac", "isLinux", "$get$isLinux", function() {
+    return $.$get$isWindows() !== true && $.$get$isMac() !== true;
+  }, "isLinux"]);
   Isolate = Isolate.$finishIsolateConstructor(Isolate);
   $ = new Isolate();
   init.metadata = ["error", "e", null, "stackTrace", "_", "result", "data", "value", "s", "o", "str", "object", "x", "each", "invocation", "line", "code", "numberOfArguments", "arg1", "val", "d", "arg2", "exitCode", "r", "arg3", "arg4", "errorCode", "closure", "theStackTrace", "isolate", "v", "state", "element", "arg", "callback", "captureThis", "self", "arguments", "nb", "errorCallback", "sender", "theError"];

@@ -5,6 +5,7 @@
 library atom.dartino.sdk.dartino;
 
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:atom/atom.dart';
 import 'package:atom/node/fs.dart';
@@ -13,6 +14,7 @@ import 'package:atom_dartino/sdk/sdk.dart';
 import 'package:atom_dartino/sdk/sdk_util.dart';
 
 import '../dartino.dart' show pluginId;
+import 'package:atom_dartino/proc.dart';
 
 class DartinoSdk extends Sdk {
   DartinoSdk(String sdkRootPath) : super(sdkRootPath);
@@ -52,8 +54,21 @@ class DartinoSdk extends Sdk {
   @override
   Future<bool> deployAndRun(String deviceName, String dstPath) async {
     //TODO(danrubel) move this into the command line utility
-    if (isMac) {
-      var deviceDir = '/Volumes/DIS_F746NG';
+    if (isMac || isLinux) {
+      var deviceDir;
+      if (isMac) {
+        deviceDir = '/Volumes/DIS_F746NG';
+      } else {
+        deviceDir = '/media';
+        String stdout = await runSync('df', summary: 'list connected devices');
+        if (stdout == null) return false;
+        for (String line in LineSplitter.split(stdout)) {
+          if (line.endsWith('/DIS_F746NG')) {
+            deviceDir = line.substring(line.lastIndexOf(' /') + 1);
+            break;
+          }
+        }
+      }
       var deviceFile = '$deviceDir/MBED.HTM';
       if (!fs.existsSync(deviceFile)) {
         atom.notifications.addError('Cannot find connected device.',
@@ -70,10 +85,6 @@ class DartinoSdk extends Sdk {
         return false;
       }
       return true;
-    }
-    if (isLinux) {
-      //TODO(danrubel) need to test this on Linux
-
     }
     if (isWindows) {
       // TODO

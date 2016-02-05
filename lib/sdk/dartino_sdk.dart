@@ -80,7 +80,6 @@ class DartinoSdk extends Sdk {
     }
     atom.notifications.addError('OS not supported yet.', dismissable: true);
     return false;
-    return false;
   }
 
   @override
@@ -90,8 +89,9 @@ class DartinoSdk extends Sdk {
         sdkRootPath,
         ['platforms/stm32f746g-discovery/bin/build.sh'],
         'Please download the SDK set the Dartino SDK path in\n'
-        'Settings > Packages > $pluginId > Dartino root directory'))
+        'Settings > Packages > $pluginId > Dartino root directory')) {
       return false;
+    }
 
     // Check to see if tools have already been downloaded
     String relPath = 'tools/gcc-arm-embedded/bin/arm-none-eabi-gcc';

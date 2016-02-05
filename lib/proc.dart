@@ -12,11 +12,12 @@ import 'package:atom/node/process.dart';
 /// Execute an external process and return a [Future] that completes
 /// with the contents of stdout.
 /// If there is a problem, notify the user and return `null`.
-Future<String> runSync(String executable,
-    {List<String> arguments: const [],
+Future<String> runProc(String executable,
+    {List<String> args: const [],
+    String cwd,
     String summary: '',
     String detail: ''}) async {
-  var runner = new ProcessRunner(executable, args: arguments);
+  var runner = new ProcessRunner(executable, args: args, cwd: cwd);
 
   var result;
   var exception;
@@ -35,7 +36,7 @@ Future<String> runSync(String executable,
   }
 
   if (exception != null || result.exit != 0) {
-    detail += '\n$executable $arguments';
+    detail += '\n$executable $args';
     if (exception != null) {
       detail += '\n$exception\n$stackTrace';
     } else {

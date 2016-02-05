@@ -22,26 +22,22 @@ class DartinoSdk extends Sdk {
   @override
   Future<String> compile(String srcPath) async {
     String srcDir = srcPath.substring(0, srcPath.lastIndexOf(fs.separator));
+    String srcName = srcPath.substring(srcDir.length + 1);
     String dstPath = srcPath.substring(0, srcPath.length - 5) + '.bin';
 
     String buildScript = sdkRootPath +
         '/platforms/stm32f746g-discovery/bin/build.sh'
             .replaceAll('/', fs.separator);
-    ProcessRunner runner =
-        new ProcessRunner(buildScript, args: [srcPath], cwd: srcDir);
 
-    //TODO(danrubel) show progress while building
+    //TODO(danrubel) show progress while building rather than individual dialogs
     atom.notifications
         .addInfo('Building application...', detail: srcPath, dismissable: true);
-    ProcessResult processResult = await runner.execSimple();
-    String stdout = processResult.stdout;
-    if (processResult.exit != 0) {
-      atom.notifications.addError('Failed to build the app',
-          dismissable: true,
-          detail: 'exit code ${processResult.exit}\n${stdout}'
-              '\n${processResult.stderr}');
-      return null;
-    }
+    String stdout = await runProc(buildScript,
+        args: [srcPath],
+        cwd: srcDir,
+        summary: 'building $srcName',
+        detail: srcPath);
+    if (stdout == null) return null;
     if (!fs.existsSync(dstPath)) {
       atom.notifications.addError('Failed to build the app',
           dismissable: true, detail: 'Expected build to generate $dstPath');
@@ -60,7 +56,7 @@ class DartinoSdk extends Sdk {
         deviceDir = '/Volumes/DIS_F746NG';
       } else {
         deviceDir = '/media';
-        String stdout = await runSync('df', summary: 'list connected devices');
+        String stdout = await runProc('df', summary: 'list connected devices');
         if (stdout == null) return false;
         for (String line in LineSplitter.split(stdout)) {
           if (line.endsWith('/DIS_F746NG')) {
@@ -75,16 +71,9 @@ class DartinoSdk extends Sdk {
             detail: deviceFile, dismissable: true);
         return false;
       }
-      var runner = new ProcessRunner('cp', args: [dstPath, deviceDir]);
-      var result = await runner.execSimple();
-      if (result.exit != 0) {
-        atom.notifications.addError('Failed to deploy app to device.',
-            detail: 'Device $deviceDir\nexit code ${result.exit}\n'
-                '${result.stdout}\n${result.stderr}\n',
-            dismissable: true);
-        return false;
-      }
-      return true;
+      var stdout = await runProc('cp',
+          args: [dstPath, deviceDir], summary: 'deploy app to device');
+      return stdout != null;
     }
     if (isWindows) {
       // TODO
@@ -110,22 +99,13 @@ class DartinoSdk extends Sdk {
     if (fs.existsSync(fs.join(sdkRootPath, relPath))) return true;
 
     // Launch external process to download tools
-    ProcessRunner runner = new ProcessRunner('bin/dartino',
-        args: ['x-download-tools'], cwd: sdkRootPath);
-    //TODO(danrubel) show progress while building
+    //TODO(danrubel) show progress while downloading rather than individual dialogs
     atom.notifications.addInfo('Downloading additional Dartino tools...',
         detail: 'into $sdkRootPath', dismissable: true);
-    ProcessResult processResult = await runner.execSimple();
-    String stdout = processResult.stdout;
-    if (processResult.exit != 0) {
-      atom.notifications.addError('Failed to download additional tools',
-          dismissable: true,
-          detail: 'Please run  bin/dartino x-download-tools\n'
-              'from $sdkRootPath\n-----\n'
-              'exit code ${processResult.exit}\n${stdout}'
-              '\n${processResult.stderr}');
-      return false;
-    }
-    return true;
+    String stdout = await runProc('bin/dartino',
+        args: ['x-download-tools'],
+        cwd: sdkRootPath,
+        summary: 'download additional Dartino tools');
+    return stdout != null;
   }
 }

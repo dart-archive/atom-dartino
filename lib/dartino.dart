@@ -158,6 +158,11 @@ _runAppOnDevice(event) async {
   // Determine the app to be built, deployed, and launched on the device
   if (!_isLaunchable(srcPath)) return;
 
+  // Save any dirty editors before building app
+  atom.workspace.getTextEditors().forEach((editor) {
+    if (editor.isModified()) editor.save();
+  });
+
   // Build the app to be run
   String dstPath = await sdk.compile(srcPath);
   if (dstPath == null) return;

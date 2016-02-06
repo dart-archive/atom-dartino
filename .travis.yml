@@ -1,7 +1,8 @@
 language: dart
 dart: stable
 
-script: ./tool/travis.sh
+script:
+  - pub run grinder bot
 
 # Speed up builds by using containerization. Disable this if you need to use
 # sudo in your scripts.

@@ -80,7 +80,6 @@ class DartinoSdk extends Sdk {
     }
     atom.notifications.addError('OS not supported yet.', dismissable: true);
     return false;
-    return false;
   }
 
   @override

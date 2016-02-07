@@ -43,8 +43,10 @@ build() async {
   outputFile.writeAsStringSync(jsCode);
 }
 
+// TODO: A no-op for now.
 @Task()
-test() => Dart.runAsync('test/all.dart');
+test() => null;
+// test() => Dart.runAsync('test/all.dart');
 
 // TODO: Removed the `ddc` dep task for now.
 @Task()

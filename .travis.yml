@@ -1,0 +1,13 @@
+language: dart
+dart: stable
+
+script:
+  - pub run grinder bot
+
+# Speed up builds by using containerization. Disable this if you need to use
+# sudo in your scripts.
+sudo: false
+
+branches:
+  only:
+    - master

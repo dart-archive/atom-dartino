@@ -10,9 +10,8 @@ import 'package:atom/atom.dart';
 import 'package:atom/node/process.dart';
 import 'package:atom/utils/disposable.dart';
 import 'package:atom_dartino/sdk/sdk.dart';
+import 'package:atom_dartino/usb.dart';
 import 'package:logging/logging.dart';
-
-import 'usb.dart';
 
 export 'package:atom/atom.dart' show registerPackage;
 
@@ -158,6 +157,11 @@ _runAppOnDevice(event) async {
 
   // Determine the app to be built, deployed, and launched on the device
   if (!_isLaunchable(srcPath)) return;
+
+  // Save any dirty editors before building app
+  atom.workspace.getTextEditors().forEach((editor) {
+    if (editor.isModified()) editor.save();
+  });
 
   // Build the app to be run
   String dstPath = await sdk.compile(srcPath);

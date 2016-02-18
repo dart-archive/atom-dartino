@@ -10,11 +10,11 @@ import 'dart:convert';
 import 'package:atom/atom.dart';
 import 'package:atom/node/fs.dart';
 import 'package:atom/node/process.dart';
-import 'package:atom_dartino/sdk/sdk.dart';
-import 'package:atom_dartino/sdk/sdk_util.dart';
 
 import '../dartino.dart' show pluginId;
-import 'package:atom_dartino/proc.dart';
+import '../proc.dart';
+import 'sdk.dart';
+import 'sdk_util.dart';
 
 class DartinoSdk extends Sdk {
   DartinoSdk(String sdkRootPath) : super(sdkRootPath);

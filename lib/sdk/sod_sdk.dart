@@ -8,11 +8,12 @@ import 'dart:async';
 
 import 'package:atom/atom.dart';
 import 'package:atom/node/fs.dart';
-import 'package:atom_dartino/dartino.dart' show pluginId;
-import 'package:atom_dartino/proc.dart';
-import 'package:atom_dartino/sdk/sdk.dart';
-import 'package:atom_dartino/sdk/sdk_util.dart';
-import 'package:atom_dartino/usb.dart';
+
+import '../dartino.dart' show pluginId;
+import '../proc.dart';
+import '../usb.dart';
+import 'sdk.dart';
+import 'sdk_util.dart';
 
 class SodSdk extends Sdk {
   SodSdk(String sdkRoot) : super(sdkRoot);

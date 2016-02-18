@@ -10,8 +10,9 @@ import 'dart:convert';
 import 'package:atom/atom.dart';
 import 'package:atom/node/fs.dart';
 import 'package:atom/node/process.dart';
-import 'package:atom_dartino/dartino.dart' show pluginId;
 import 'package:logging/logging.dart';
+
+import 'dartino.dart' show pluginId;
 
 /// A map of ttyPath to connected Device
 final Map<String, Device> _devices = {};

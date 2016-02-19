@@ -25,12 +25,13 @@ class SodSdk extends Sdk {
     String dstPath = srcPath.substring(0, srcPath.length - 5) + '.snap';
 
     //TODO(danrubel) show progress while building rather than individual dialogs
-    atom.notifications
+    var info = atom.notifications
         .addInfo('Building application...', detail: dstPath, dismissable: true);
     String stdout = await runProc('make',
         args: [dstPath], cwd: sdkRootPath, summary: 'build $srcName');
+    info.dismiss();
     if (stdout == null) return null;
-    atom.notifications.addSuccess('Build successful.', dismissable: true);
+    atom.notifications.addSuccess('Build successful.');
     return dstPath;
   }
 

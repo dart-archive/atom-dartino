@@ -4,6 +4,7 @@
 - project folder containing `dartino.yaml` is analyzed as Dartino project
 - auto save editors before running on device
 - menu actions for 'Getting Started' and 'SDK Docs'
+- auto close/cleanup compile/launch dialogs
 
 ## 0.0.3
 - add support to compile, deploy, run Dartino app on STM32 Discovery board from Linux

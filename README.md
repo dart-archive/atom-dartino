@@ -2,11 +2,10 @@
 
 [![Build Status](https://travis-ci.org/dartino/atom-dartino.svg?branch=master)](https://travis-ci.org/dartino/atom-dartino)
 
-This package is a [SoD](https://github.com/domokit/sod) development plugin
+This package is a [Dartino](http://dartino.github.io/sdk/)
+and [SoD](https://github.com/domokit/sod) development plugin
 for [Atom](https://atom.io)
 built on top of the Atom [dartlang](https://atom.io/packages/dartlang) plugin.
-
-[Dartino](http://dartino.github.io/sdk/) support in the works.
 
 ## Features
 

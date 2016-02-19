@@ -8,6 +8,9 @@
           { label: 'Run app on device', command: 'dartino:run-app-on-device' }
           { type: 'separator' }
           { label: 'Package Settings…', command: 'dartino:settings' }
+          { type: 'separator' }
+          { label: 'Getting Started…', command: 'dartino:getting-started' }
+          { label: 'SDK Docs…', command: 'dartino:sdk-docs' }
         ]
       }
     ]

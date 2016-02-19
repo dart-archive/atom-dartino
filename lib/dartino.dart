@@ -8,6 +8,7 @@ import 'dart:async';
 
 import 'package:atom/atom.dart';
 import 'package:atom/node/process.dart';
+import 'package:atom/node/shell.dart';
 import 'package:atom/utils/disposable.dart';
 import 'package:logging/logging.dart';
 
@@ -32,6 +33,8 @@ class DartinoDevPackage extends AtomPackage {
     // Register commands.
     _addCmd('atom-workspace', 'dartino:settings', openDartinoSettings);
     _addCmd('atom-workspace', 'dartino:run-app-on-device', _runAppOnDevice);
+    _addCmd('atom-workspace', 'dartino:getting-started', _showGettingStarted);
+    _addCmd('atom-workspace', 'dartino:sdk-docs', _showSdkDocs);
   }
 
   Map config() {
@@ -176,4 +179,15 @@ _runAppOnDevice(event) async {
   if (await sdk.deployAndRun(portName, dstPath)) {
     atom.notifications.addInfo('Launched app on device', dismissable: true);
   }
+}
+
+_showGettingStarted(event) async {
+  shell.openExternal('https://dartino.org/index.html');
+}
+
+_showSdkDocs(event) async {
+  Sdk sdk = await findSdk(null);
+  if (sdk == null) return;
+  // TODO(danrubel) convert Windows file path to URI
+  shell.openExternal('file://${sdk.sdkRootPath}/docs/index.html');
 }

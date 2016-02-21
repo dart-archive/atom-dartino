@@ -8,11 +8,12 @@ import 'dart:async';
 
 import 'package:atom/atom.dart';
 import 'package:atom/node/fs.dart';
-import 'package:atom_dartino/dartino.dart' show pluginId;
-import 'package:atom_dartino/proc.dart';
-import 'package:atom_dartino/sdk/sdk.dart';
-import 'package:atom_dartino/sdk/sdk_util.dart';
-import 'package:atom_dartino/usb.dart';
+
+import '../dartino.dart' show pluginId;
+import '../proc.dart';
+import '../usb.dart';
+import 'sdk.dart';
+import 'sdk_util.dart';
 
 class SodSdk extends Sdk {
   SodSdk(String sdkRoot) : super(sdkRoot);
@@ -24,12 +25,13 @@ class SodSdk extends Sdk {
     String dstPath = srcPath.substring(0, srcPath.length - 5) + '.snap';
 
     //TODO(danrubel) show progress while building rather than individual dialogs
-    atom.notifications
+    var info = atom.notifications
         .addInfo('Building application...', detail: dstPath, dismissable: true);
     String stdout = await runProc('make',
         args: [dstPath], cwd: sdkRootPath, summary: 'build $srcName');
+    info.dismiss();
     if (stdout == null) return null;
-    atom.notifications.addSuccess('Build successful.', dismissable: true);
+    atom.notifications.addSuccess('Build successful.');
     return dstPath;
   }
 

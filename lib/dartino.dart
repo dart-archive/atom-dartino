@@ -7,11 +7,14 @@ library atom.dartino.plugin;
 import 'dart:async';
 
 import 'package:atom/atom.dart';
+import 'package:atom/node/fs.dart';
 import 'package:atom/node/process.dart';
+import 'package:atom/node/shell.dart';
 import 'package:atom/utils/disposable.dart';
-import 'package:atom_dartino/sdk/sdk.dart';
-import 'package:atom_dartino/usb.dart';
 import 'package:logging/logging.dart';
+
+import 'sdk/sdk.dart';
+import 'usb.dart';
 
 export 'package:atom/atom.dart' show registerPackage;
 
@@ -31,6 +34,8 @@ class DartinoDevPackage extends AtomPackage {
     // Register commands.
     _addCmd('atom-workspace', 'dartino:settings', openDartinoSettings);
     _addCmd('atom-workspace', 'dartino:run-app-on-device', _runAppOnDevice);
+    _addCmd('atom-workspace', 'dartino:getting-started', _showGettingStarted);
+    _addCmd('atom-workspace', 'dartino:sdk-docs', _showSdkDocs);
   }
 
   Map config() {
@@ -173,6 +178,18 @@ _runAppOnDevice(event) async {
 
   // Deploy and run the app on the device
   if (await sdk.deployAndRun(portName, dstPath)) {
-    atom.notifications.addInfo('Launched app on device', dismissable: true);
+    atom.notifications.addInfo('Launched app on device');
   }
+}
+
+_showGettingStarted(event) {
+  shell.openExternal('https://dartino.org/index.html');
+}
+
+_showSdkDocs(event) async {
+  Sdk sdk = await findSdk(null);
+  if (sdk == null) return;
+  // TODO(danrubel) convert Windows file path to URI
+  var uri = new Uri.file(fs.join(sdk.sdkRootPath, 'docs', 'index.html'));
+  shell.openExternal(uri.toString());
 }

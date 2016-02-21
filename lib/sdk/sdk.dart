@@ -7,10 +7,10 @@ library atom.dartino.sdk;
 import 'dart:async';
 
 import 'package:atom/atom.dart';
-import 'package:atom_dartino/sdk/dartino_sdk.dart';
-import 'package:atom_dartino/sdk/sod_sdk.dart';
 
 import '../dartino.dart' show pluginId, openDartinoSettings;
+import 'dartino_sdk.dart';
+import 'sod_sdk.dart';
 
 /// Return the SDK associated with the given application.
 /// If the SDK cannot be determined, notify the user and return `null`.

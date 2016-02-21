@@ -10,11 +10,11 @@ import 'dart:convert';
 import 'package:atom/atom.dart';
 import 'package:atom/node/fs.dart';
 import 'package:atom/node/process.dart';
-import 'package:atom_dartino/sdk/sdk.dart';
-import 'package:atom_dartino/sdk/sdk_util.dart';
 
 import '../dartino.dart' show pluginId;
-import 'package:atom_dartino/proc.dart';
+import '../proc.dart';
+import 'sdk.dart';
+import 'sdk_util.dart';
 
 class DartinoSdk extends Sdk {
   DartinoSdk(String sdkRootPath) : super(sdkRootPath);
@@ -30,20 +30,21 @@ class DartinoSdk extends Sdk {
             .replaceAll('/', fs.separator);
 
     //TODO(danrubel) show progress while building rather than individual dialogs
-    atom.notifications
+    var info = atom.notifications
         .addInfo('Building application...', detail: srcPath, dismissable: true);
     String stdout = await runProc(buildScript,
         args: [srcPath],
         cwd: srcDir,
         summary: 'building $srcName',
         detail: srcPath);
+    info.dismiss();
     if (stdout == null) return null;
     if (!fs.existsSync(dstPath)) {
       atom.notifications.addError('Failed to build the app',
           dismissable: true, detail: 'Expected build to generate $dstPath');
       return null;
     }
-    atom.notifications.addSuccess('Build successful.', dismissable: true);
+    atom.notifications.addSuccess('Build successful.');
     return dstPath;
   }
 

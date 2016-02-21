@@ -1,0 +1,14 @@
+*.o
+packages
+.packages
+pubspec.lock
+*.tmp
+.DS_Store
+.buildlog
+.project
+.idea
+*.iml
+.pub
+.c9
+dart-cov-*.json
+doc

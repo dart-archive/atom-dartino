@@ -7,6 +7,7 @@ library atom.dartino.plugin;
 import 'dart:async';
 
 import 'package:atom/atom.dart';
+import 'package:atom/node/fs.dart';
 import 'package:atom/node/process.dart';
 import 'package:atom/node/shell.dart';
 import 'package:atom/utils/disposable.dart';
@@ -177,11 +178,11 @@ _runAppOnDevice(event) async {
 
   // Deploy and run the app on the device
   if (await sdk.deployAndRun(portName, dstPath)) {
-    atom.notifications.addInfo('Launched app on device', dismissable: true);
+    atom.notifications.addInfo('Launched app on device');
   }
 }
 
-_showGettingStarted(event) async {
+_showGettingStarted(event) {
   shell.openExternal('https://dartino.org/index.html');
 }
 
@@ -189,5 +190,6 @@ _showSdkDocs(event) async {
   Sdk sdk = await findSdk(null);
   if (sdk == null) return;
   // TODO(danrubel) convert Windows file path to URI
-  shell.openExternal('file://${sdk.sdkRootPath}/docs/index.html');
+  var uri = new Uri.file(fs.join(sdk.sdkRootPath, 'docs', 'index.html'));
+  shell.openExternal(uri.toString());
 }

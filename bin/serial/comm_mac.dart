@@ -7,8 +7,7 @@ library dartino.device.comm.mac;
 import 'dart:async';
 import 'dart:io';
 
-import 'package:serial_port/serial_port.dart';
-
+import '../serial_port/serial_port.dart';
 import 'comm.dart';
 
 /// Clients should call [Comm.list] rather than this method.

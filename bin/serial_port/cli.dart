@@ -1,5 +1,3 @@
-#!/usr/bin/env dart
-
 // Copyright (c) 2014-2015, Nicolas François
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,28 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-library serial_port.script;
+library serial_port.cli;
 
 import 'dart:io';
-import 'package:serial_port/cli.dart' deferred as cli;
 
-/// Command list tools for serial port api
-/// serial_port list
-void main(List<String> args) async {
-  if(args.length != 1){
-    invalidCommand();
-  }
-  final command = args[0];
-  if(command=="list") {
-    await cli.loadLibrary();
-    cli.list();
+import '../serial_port/serial_port.dart';
+
+/// List serial port
+list() async {
+  List<String> results = await SerialPort.availablePortNames;
+  if(results.isEmpty){
+    stdout.writeln("No serial port available found.");
   } else {
-    invalidCommand();
+    results.forEach(stdout.writeln);
   }
-
-}
-
-void invalidCommand(){
-  stderr.writeln("Invalid command\nUsage:\nserial_port list\n");
-  exit(-1);
 }

@@ -7,6 +7,7 @@ library atom.dartino.plugin;
 import 'dart:async';
 
 import 'package:atom/atom.dart';
+import 'package:atom/atom_utils.dart';
 import 'package:atom/node/fs.dart';
 import 'package:atom/node/process.dart';
 import 'package:atom/node/shell.dart';
@@ -32,6 +33,7 @@ class DartinoDevPackage extends AtomPackage {
     _logger.fine("Running on Chrome version ${process.chromeVersion}.");
 
     // Register commands.
+    _addCmd('atom-workspace', 'dartino:create-new-proj', _createNewProject);
     _addCmd('atom-workspace', 'dartino:settings', openDartinoSettings);
     _addCmd('atom-workspace', 'dartino:run-app-on-device', _runAppOnDevice);
     _addCmd('atom-workspace', 'dartino:getting-started', _showGettingStarted);
@@ -101,6 +103,48 @@ class DartinoDevPackage extends AtomPackage {
 
 void openDartinoSettings([_]) {
   atom.workspace.open('atom://config/packages/dartino');
+}
+
+_createNewProject([_]) async {
+  var sdk = await findSdk(null);
+  if (sdk == null) return;
+
+  String projectName = 'stm32f746g_discovery_project';
+  String parentPath = fs.dirname(sdk.sdkRootPath);
+  String projectPath = fs.join(parentPath, projectName);
+  projectPath = await promptUser('Enter the path to the project to create:',
+      defaultText: projectPath, selectLastWord: true);
+  if (projectPath == null) return;
+
+  //TODO(danrubel) move this functionality into dartino create project
+  try {
+    var dir = new Directory.fromPath(projectPath);
+    if (!dir.existsSync()) await dir.create();
+    if (!dir.getEntriesSync().isEmpty) {
+      atom.notifications.addError('Project already exists',
+          detail: projectPath, dismissable: true);
+      return;
+    }
+    dir.getFile('dartino.yaml').writeSync(
+        r'''# This is an empty Dartino configuration file. Currently this is only used as a
+# placeholder to enable the Dartino Atom package.''');
+    dir.getFile('main.dart').writeSync(r'''import 'dart:dartino';
+import 'package:stm32f746g_disco/stm32f746g_disco.dart';
+
+main() {
+  // TODO: Add your Dartino code here.
+}''');
+  } catch (e, s) {
+    atom.notifications.addError('Failed to create new project',
+        detail: '$projectPath\n$e\n$s', dismissable: true);
+    return;
+  }
+
+  atom.project.addPath(projectPath);
+  var editor = await atom.workspace.open(fs.join(projectPath, 'main.dart'));
+  // Focus the file in the files view 'tree-view:reveal-active-file'.
+  var view = atom.views.getView(editor);
+  atom.commands.dispatch(view, 'tree-view:reveal-active-file');
 }
 
 /// Return the portName for the connected device.

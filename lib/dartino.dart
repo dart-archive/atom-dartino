@@ -8,6 +8,7 @@ import 'dart:async';
 
 import 'package:atom/atom.dart';
 import 'package:atom/atom_utils.dart';
+import 'package:atom/utils/package_deps.dart' as package_deps;
 import 'package:atom/node/fs.dart';
 import 'package:atom/node/process.dart';
 import 'package:atom/node/shell.dart';
@@ -31,6 +32,15 @@ class DartinoDevPackage extends AtomPackage {
     _setupLogging();
     _logger.info("activated");
     _logger.fine("Running on Chrome version ${process.chromeVersion}.");
+
+    new Future.delayed(Duration.ZERO, () {
+      package_deps.install('Dartino', this);
+
+      //TODO(danrubel) Remove this once Dartino compile/deploy/run
+      // has been integrated into the base Dart launch manager in dartlang
+      _logger.info('hide atom toolbar');
+      atom.config.setValue('atom-toolbar.visible', false);
+    });
 
     // Register commands.
     _addCmd('atom-workspace', 'dartino:create-new-proj', _createNewProject);

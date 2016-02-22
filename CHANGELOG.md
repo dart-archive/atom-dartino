@@ -1,5 +1,10 @@
 # dartino plugin changelog
 
+## unreleased
+- hide atom-toolbar on startup (until Dartino launch is integrated in dartlang)
+- auto install dartlang plugin if not already installed
+- updated readme with installation and getting started instructions
+
 ## 0.0.4
 - project folder containing `dartino.yaml` is analyzed as Dartino project
 - auto save editors before running on device

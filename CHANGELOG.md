@@ -1,9 +1,9 @@
 # dartino plugin changelog
 
-## unreleased
+## 0.0.4
 - project folder containing `dartino.yaml` is analyzed as Dartino project
 - auto save editors before running on device
-- menu actions for 'Getting Started' and 'SDK Docs'
+- menu actions for 'Getting Started', 'SDK Docs', and 'Create new Project'
 - auto close/cleanup compile/launch dialogs
 
 ## 0.0.3

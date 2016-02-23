@@ -84,13 +84,14 @@ class DartinoSdk extends Sdk {
   }
 
   @override
-  Future<bool> verifyInstall() async {
+  Future<bool> verifyInstall({String suggestion}) async {
     if (!checkSdkFile(
         'Dartino',
         sdkRootPath,
         ['platforms/stm32f746g-discovery/bin/build.sh'],
-        'Please download the SDK set the Dartino SDK path in\n'
-        'Settings > Packages > $pluginId > Dartino root directory')) {
+        suggestion ??
+            'Please download the SDK and set the Dartino SDK path in\n'
+            'Settings > Packages > $pluginId > Dartino root directory')) {
       return false;
     }
 

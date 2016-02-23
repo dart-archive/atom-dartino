@@ -51,6 +51,10 @@ class DartinoDevPackage extends AtomPackage {
   }
 
   Map config() {
+    _disposables
+        .add(atom.config.observe('$pluginId.sodPath', {}, _validateSodSdk));
+    _disposables.add(
+        atom.config.observe('$pluginId.dartinoPath', {}, _validateDartinoSdk));
     return {
       'devicePath': {
         'title': 'Device path.',
@@ -108,6 +112,31 @@ class DartinoDevPackage extends AtomPackage {
       }
       _logger.info("logging level: ${Logger.root.level}");
     }));
+  }
+
+  Timer _validationTimer;
+  Duration _validationTimeout = new Duration(seconds: 3);
+
+  void _validateDartinoSdk([_]) {
+    _validationTimer?.cancel();
+    _validationTimer = new Timer(_validationTimeout, () async {
+      var sdk = rawDartinoSdk();
+      if (sdk != null && await sdk.verifyInstall(suggestion: '')) {
+        atom.notifications
+            .addSuccess('Found valid Dartino SDK', detail: sdk.sdkRootPath);
+      }
+    });
+  }
+
+  void _validateSodSdk(value) {
+    _validationTimer?.cancel();
+    _validationTimer = new Timer(_validationTimeout, () async {
+      var sdk = rawSodSdk();
+      if (sdk != null && await sdk.verifyInstall(suggestion: '')) {
+        atom.notifications
+            .addSuccess('Found valid SoD SDK', detail: sdk.sdkRootPath);
+      }
+    });
   }
 }
 

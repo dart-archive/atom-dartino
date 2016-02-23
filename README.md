@@ -21,8 +21,7 @@ on connected device.
   (with `apm install dartino` or through the Atom UI)
 - Install [Dart SDK](https://www.dartlang.org/downloads/)
   version 1.15.0-dev.4.0 or better
-- Install the [Dartino SDK](http://gsdview.appspot.com/dartino-archive/channels/dev/raw/0.3.0-dev.5.2/sdk/)
-  version 0.3.0-dev.5.2 or better
+- Install the Dartino SDK version 0.3.0-dev.5.2 or better: [MacOS](https://storage.googleapis.com/dartino-archive/channels/dev/release/latest/sdk/dartino-sdk-macos-x64-release.zip), [Linux](https://storage.googleapis.com/dartino-archive/channels/dev/release/latest/sdk/dartino-sdk-linux-x64-release.zip)
 
 ## Setup in Atom
 

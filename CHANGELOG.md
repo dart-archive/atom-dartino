@@ -1,6 +1,6 @@
 # dartino plugin changelog
 
-## unreleased
+## 0.0.5
 - hide atom-toolbar on startup (until Dartino launch is integrated in dartlang)
 - auto install dartlang plugin if not already installed
 - updated readme with installation and getting started instructions

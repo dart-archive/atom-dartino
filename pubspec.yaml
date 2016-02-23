@@ -1,5 +1,5 @@
 name: atom_dartino
-version: 0.0.4
+version: 0.0.5
 description: A Dartino plugin for Atom.
 
 environment:

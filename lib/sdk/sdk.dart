@@ -15,19 +15,10 @@ import 'sod_sdk.dart';
 /// Return the SDK associated with the given application.
 /// If the SDK cannot be determined, notify the user and return `null`.
 Future<Sdk> findSdk(String srcPath) async {
-  //TODO(danrubel) read the .packages file to determine the associated SDK
+  //TODO(danrubel) read the dartino.yaml file to determine the associated SDK
   // and support both SDKs in the same workspace
-  Sdk sdk;
-
-  String dartinoPath = atom.config.getValue('$pluginId.dartinoPath');
-  if (dartinoPath != null && dartinoPath.trim().isNotEmpty) {
-    sdk = new DartinoSdk(dartinoPath);
-  }
-
-  String sodPath = atom.config.getValue('$pluginId.sodPath');
-  if (sodPath != null && sodPath.trim().isNotEmpty) {
-    sdk = new SodSdk(sodPath);
-  }
+  Sdk sdk = rawDartinoSdk();
+  if (sdk == null) sdk = rawSodSdk();
 
   if (sdk == null) {
     atom.notifications.addError('No SOD or Dartino path specified.',
@@ -42,6 +33,26 @@ Future<Sdk> findSdk(String srcPath) async {
   }
 
   return await sdk.verifyInstall() ? sdk : null;
+}
+
+/// Return the Dartino SDK as specified in the settings
+/// or `null` if not specified. The returned SDK may not be valid.
+DartinoSdk rawDartinoSdk() {
+  String path = atom.config.getValue('$pluginId.dartinoPath');
+  if (path == null) return null;
+  path = path.trim();
+  if (path.isEmpty) return null;
+  return new DartinoSdk(path);
+}
+
+/// Return the Sod SDK as specified in the settings
+/// or `null` if not specified. The returned SDK may not be valid.
+SodSdk rawSodSdk() {
+  String path = atom.config.getValue('$pluginId.sodPath');
+  if (path == null) return null;
+  path = path.trim();
+  if (path.isEmpty) return null;
+  return new SodSdk(path);
 }
 
 /// Common interface for all Dartino based SDKs.
@@ -62,5 +73,5 @@ abstract class Sdk {
   /// Return `true` if the SDK is correctly installed and usable.
   /// If there is a problem, notify the user and automatically fix if possible.
   /// If the problem persists, return `false`.
-  Future<bool> verifyInstall();
+  Future<bool> verifyInstall({String suggestion});
 }

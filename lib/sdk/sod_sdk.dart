@@ -41,12 +41,12 @@ class SodSdk extends Sdk {
   }
 
   @override
-  Future<bool> verifyInstall() async {
+  Future<bool> verifyInstall({String suggestion}) async {
     if (!checkSdkFile(
         'SOD',
         sdkRootPath,
         ['makefile', 'third_party/openocd/README.md'],
-        'Please use gclient to install SOD and set the SOD path in\n'
+        suggestion ?? 'Please use gclient to install SOD and set the SOD path in\n'
         'Settings > Packages > $pluginId > SOD root directory')) return false;
     if (!checkSdkFile(
         'SOD',

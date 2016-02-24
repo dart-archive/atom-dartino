@@ -19,7 +19,6 @@ bool checkSdkFile(
     if (!fs.existsSync(path)) {
       atom.notifications.addError('Invalid $sdkName directory specified.',
           detail: 'Could not find "$relPath" in\n$sdkPath.\n$suggestion',
-          dismissable: true,
           buttons: [
             new NotificationButton('Open settings', openDartinoSettings)
           ]);

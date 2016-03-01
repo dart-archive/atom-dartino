@@ -33,13 +33,14 @@ class DartinoDevPackage extends AtomPackage {
     _logger.info("activated");
     _logger.fine("Running on Chrome version ${process.chromeVersion}.");
 
-    new Future.delayed(Duration.ZERO, () {
-      package_deps.install('Dartino', this);
-
+    new Future.delayed(Duration.ZERO, () async {
       //TODO(danrubel) Remove this once Dartino compile/deploy/run
       // has been integrated into the base Dart launch manager in dartlang
       _logger.info('hide atom toolbar');
       atom.config.setValue('atom-toolbar.visible', false);
+
+      await package_deps.install('Dartino', this);
+      _checkSdkInstalled();
     });
 
     // Register commands.
@@ -142,6 +143,34 @@ class DartinoDevPackage extends AtomPackage {
 
 void openDartinoSettings([_]) {
   atom.workspace.open('atom://config/packages/dartino');
+}
+
+/// If an SDK is not configured, offer to download and install it.
+void _checkSdkInstalled([_]) {
+  String path = atom.config.getValue('$pluginId.dartinoPath');
+  if (path == null) path = atom.config.getValue('$pluginId.sodPath');
+  if (path != null && path.trim().isNotEmpty) return;
+  Notification info;
+  info = atom.notifications.addInfo('Install Dartino SDK?',
+      detail: 'No Dartino SDK has been configured.\n'
+          ' \n'
+          'Would you like the Dartino SDK\n'
+          'automatically downloaded and installed?\n'
+          ' \n'
+          'Or would you like to open the settings page and specify\n'
+          'the location of an already installed Dartino SDK?',
+      buttons: [
+        new NotificationButton('Install SDK', () {
+          info.dismiss();
+          var view = atom.views.getView(atom.workspace);
+          atom.commands.dispatch(view, 'dartino:install-sdk');
+        }),
+        new NotificationButton('Open Settings', () {
+          info.dismiss();
+          openDartinoSettings();
+        })
+      ],
+      dismissable: true);
 }
 
 _createNewProject([_]) async {

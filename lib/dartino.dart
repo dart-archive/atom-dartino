@@ -163,7 +163,7 @@ void _checkSdkInstalled([_]) {
         new NotificationButton('Install SDK', () {
           info.dismiss();
           var view = atom.views.getView(atom.workspace);
-          atom.commands.dispatch(view, 'dartino:installSdk');
+          atom.commands.dispatch(view, 'dartino:install-sdk');
         }),
         new NotificationButton('Open Settings', () {
           info.dismiss();

@@ -22,8 +22,9 @@ export 'package:atom/atom.dart' show registerPackage;
 
 const pluginId = 'dartino';
 
+final Logger _logger = new Logger(pluginId);
+
 class DartinoDevPackage extends AtomPackage {
-  final Logger _logger = new Logger(pluginId);
   final Disposables _disposables = new Disposables(catchExceptions: true);
 
   DartinoDevPackage() : super(pluginId);
@@ -52,10 +53,11 @@ class DartinoDevPackage extends AtomPackage {
   }
 
   Map config() {
+    //TODO(danrubel) combine separate sdk paths into single $pluginId.sdkPath
     _disposables
-        .add(atom.config.observe('$pluginId.sodPath', {}, _validateSodSdk));
-    _disposables.add(
-        atom.config.observe('$pluginId.dartinoPath', {}, _validateDartinoSdk));
+        .add(atom.config.observe('$pluginId.sodPath', {}, _checkSdkValid));
+    _disposables
+        .add(atom.config.observe('$pluginId.dartinoPath', {}, _checkSdkValid));
     return {
       'devicePath': {
         'title': 'Device path.',
@@ -114,31 +116,6 @@ class DartinoDevPackage extends AtomPackage {
       _logger.info("logging level: ${Logger.root.level}");
     }));
   }
-
-  Timer _validationTimer;
-  Duration _validationTimeout = new Duration(seconds: 3);
-
-  void _validateDartinoSdk([_]) {
-    _validationTimer?.cancel();
-    _validationTimer = new Timer(_validationTimeout, () async {
-      var sdk = rawDartinoSdk();
-      if (sdk != null && await sdk.verifyInstall(suggestion: '')) {
-        atom.notifications
-            .addSuccess('Found valid Dartino SDK', detail: sdk.sdkRootPath);
-      }
-    });
-  }
-
-  void _validateSodSdk(value) {
-    _validationTimer?.cancel();
-    _validationTimer = new Timer(_validationTimeout, () async {
-      var sdk = rawSodSdk();
-      if (sdk != null && await sdk.verifyInstall(suggestion: '')) {
-        atom.notifications
-            .addSuccess('Found valid SoD SDK', detail: sdk.sdkRootPath);
-      }
-    });
-  }
 }
 
 void openDartinoSettings([_]) {
@@ -162,8 +139,7 @@ void _checkSdkInstalled([_]) {
       buttons: [
         new NotificationButton('Install SDK', () {
           info.dismiss();
-          var view = atom.views.getView(atom.workspace);
-          atom.commands.dispatch(view, 'dartino:install-sdk');
+          _dispatch('dartino:install-sdk');
         }),
         new NotificationButton('Open Settings', () {
           info.dismiss();
@@ -171,6 +147,22 @@ void _checkSdkInstalled([_]) {
         })
       ],
       dismissable: true);
+}
+
+final Duration _checkSdkTimeout = new Duration(seconds: 3);
+bool _skipSdkCheck = true; // skip check on startup
+Timer _checkSdkTimer;
+
+/// If an SDK is configured, validate it... but not on startup
+void _checkSdkValid([_]) {
+  if (_skipSdkCheck) {
+    _skipSdkCheck = false;
+    return;
+  }
+  _checkSdkTimer?.cancel();
+  _checkSdkTimer = new Timer(_checkSdkTimeout, () {
+    _dispatch('dartino:validate-sdk');
+  });
 }
 
 _createNewProject([_]) async {
@@ -213,6 +205,11 @@ main() {
   // Focus the file in the files view 'tree-view:reveal-active-file'.
   var view = atom.views.getView(editor);
   atom.commands.dispatch(view, 'tree-view:reveal-active-file');
+}
+
+void _dispatch(String commandName) {
+  var view = atom.views.getView(atom.workspace);
+  atom.commands.dispatch(view, commandName);
 }
 
 /// Return the portName for the connected device.

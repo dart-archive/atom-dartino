@@ -2,6 +2,8 @@
 
 ## unreleased
 - prompt to install SDK on startup if not already installed
+- validate the specified SDK path
+- integrate launch into the existing dartlang plugin launching framework
 
 ## 0.0.5
 - hide atom-toolbar on startup (until Dartino launch is integrated in dartlang)

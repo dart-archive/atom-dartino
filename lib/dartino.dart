@@ -150,13 +150,13 @@ void _checkSdkInstalled([_]) {
 }
 
 final Duration _checkSdkTimeout = new Duration(seconds: 3);
-bool _skipSdkCheck = true; // skip check on startup
+int _skipSdkCheck = 3; // skip check on startup
 Timer _checkSdkTimer;
 
 /// If an SDK is configured, validate it... but not on startup
 void _checkSdkValid([_]) {
-  if (_skipSdkCheck) {
-    _skipSdkCheck = false;
+  if (_skipSdkCheck > 0) {
+    --_skipSdkCheck;
     return;
   }
   _checkSdkTimer?.cancel();

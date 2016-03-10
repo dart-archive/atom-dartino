@@ -8,11 +8,11 @@ import 'dart:async';
 
 import 'package:atom/atom.dart';
 import 'package:atom/atom_utils.dart';
-import 'package:atom/utils/package_deps.dart' as package_deps;
 import 'package:atom/node/fs.dart';
 import 'package:atom/node/process.dart';
 import 'package:atom/node/shell.dart';
 import 'package:atom/utils/disposable.dart';
+import 'package:atom/utils/package_deps.dart' as package_deps;
 import 'package:logging/logging.dart';
 
 import 'sdk/sdk.dart';
@@ -35,11 +35,6 @@ class DartinoDevPackage extends AtomPackage {
     _logger.fine("Running on Chrome version ${process.chromeVersion}.");
 
     new Future.delayed(Duration.ZERO, () async {
-      //TODO(danrubel) Remove this once Dartino compile/deploy/run
-      // has been integrated into the base Dart launch manager in dartlang
-      _logger.info('hide atom toolbar');
-      atom.config.setValue('atom-toolbar.visible', false);
-
       await package_deps.install('Dartino', this);
       _checkSdkInstalled();
     });
@@ -53,11 +48,8 @@ class DartinoDevPackage extends AtomPackage {
   }
 
   Map config() {
-    //TODO(danrubel) combine separate sdk paths into single $pluginId.sdkPath
-    _disposables
-        .add(atom.config.observe('$pluginId.sodPath', {}, _checkSdkValid));
-    _disposables
-        .add(atom.config.observe('$pluginId.dartinoPath', {}, _checkSdkValid));
+    _disposables.add(new DisposeableSubscription(
+        atom.config.onDidChange('$pluginId.sdkPath').listen(_checkSdkValid)));
     return {
       'devicePath': {
         'title': 'Device path.',
@@ -66,18 +58,10 @@ class DartinoDevPackage extends AtomPackage {
         'default': '',
         'order': 1
       },
-      'sodPath': {
-        'title': 'SOD root directory.',
-        'description': 'The directory in which https://github.com/domokit/sod'
-            ' has been checked out and built.',
-        'type': 'string',
-        'default': '',
-        'order': 2
-      },
-      'dartinoPath': {
-        'title': 'Dartino root directory.',
-        'description': 'The directory in which http://dartino.github.io/sdk/'
-            ' has been downloaded and unzipped.',
+      'sdkPath': {
+        'title': 'SDK root directory.',
+        'description': 'The directory containing the Dartino SDK'
+            ' or the SOD repository.',
         'type': 'string',
         'default': '',
         'order': 2
@@ -124,8 +108,30 @@ void openDartinoSettings([_]) {
 
 /// If an SDK is not configured, offer to download and install it.
 void _checkSdkInstalled([_]) {
-  String path = atom.config.getValue('$pluginId.dartinoPath');
-  if (path == null) path = atom.config.getValue('$pluginId.sodPath');
+  String path = atom.config.getValue('$pluginId.sdkPath');
+
+  // TODO(danrubel): Remove this compatibility code after release 0.0.7
+  if (path == null || path.trim().isEmpty) {
+    path = atom.config.getValue('$pluginId.dartinoPath');
+    if (path == null || path.trim().isEmpty) {
+      path = atom.config.getValue('$pluginId.sodPath');
+    }
+    if (path != null && path.trim().isNotEmpty) {
+      atom.config.setValue('$pluginId.sdkPath', path);
+      atom.config.setValue('$pluginId.dartinoPath', null);
+      atom.config.setValue('$pluginId.sodPath', null);
+      return;
+    }
+  }
+
+  if (path == null || path.trim().isEmpty) {
+    path = fs.join(fs.homedir, 'dartino-sdk');
+    if (fs.existsSync(path)) {
+      atom.config.setValue('$pluginId.sdkPath', path);
+    } else {
+      path = null;
+    }
+  }
   if (path != null && path.trim().isNotEmpty) return;
   Notification info;
   info = atom.notifications.addInfo('Install Dartino SDK?',

@@ -7,6 +7,7 @@ library atom.dartino.sdk;
 import 'dart:async';
 
 import 'package:atom/atom.dart';
+import 'package:atom/node/notification.dart';
 
 import '../dartino.dart' show pluginId, openDartinoSettings;
 import 'dartino_sdk.dart';

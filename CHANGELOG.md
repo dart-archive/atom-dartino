@@ -1,6 +1,6 @@
 # dartino plugin changelog
 
-## unreleased
+## 0.0.6
 - prompt to install SDK on startup if not already installed
 - validate the specified SDK path
 - integrate launch into the existing dartlang plugin launching framework

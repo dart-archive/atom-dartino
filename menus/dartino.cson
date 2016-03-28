@@ -5,8 +5,8 @@
       {
         label: 'Dartino'
         submenu: [
-          { label: 'Create new project…', command: 'dartino:create-new-proj' }
-          { label: 'Run app on device', command: 'dartino:run-app-on-device' }
+          { label: 'Create new project…', command: 'dartino:create-new-project' }
+          { label: 'Run app on device', command: 'dartlang:run-application' }
           { type: 'separator' }
           { label: 'Package Settings…', command: 'dartino:settings' }
           { type: 'separator' }

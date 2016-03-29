@@ -15,8 +15,6 @@ import 'package:atom/utils/disposable.dart';
 import 'package:atom/utils/package_deps.dart' as package_deps;
 import 'package:logging/logging.dart';
 
-import 'usb.dart';
-
 export 'package:atom/atom.dart' show registerPackage;
 
 const pluginId = 'dartino';
@@ -75,7 +73,6 @@ class DartinoDevPackage extends AtomPackage {
   }
 
   void deactivate() {
-    disconnectDevices();
     _logger.info('deactivated');
     _disposables.dispose();
   }

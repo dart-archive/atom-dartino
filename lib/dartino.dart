@@ -9,13 +9,14 @@ import 'dart:async';
 import 'package:atom/atom.dart';
 import 'package:atom/node/fs.dart';
 import 'package:atom/node/notification.dart';
+import 'package:atom/node/package.dart';
 import 'package:atom/node/process.dart';
 import 'package:atom/node/shell.dart';
 import 'package:atom/utils/disposable.dart';
 import 'package:atom/utils/package_deps.dart' as package_deps;
 import 'package:logging/logging.dart';
 
-export 'package:atom/atom.dart' show registerPackage;
+export 'package:atom/node/package.dart' show registerPackage;
 
 const pluginId = 'dartino';
 

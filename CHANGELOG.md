@@ -1,5 +1,10 @@
 # dartino plugin changelog
 
+## 0.0.7
+- echo output from app running on device
+- initial support for launching apps on Dartuino board
+- soft reboot rather than power cycle when deploying SOD apps
+
 ## 0.0.6
 - prompt to install SDK on startup if not already installed
 - validate the specified SDK path

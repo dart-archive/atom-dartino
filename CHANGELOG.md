@@ -1,5 +1,8 @@
 # dartino plugin changelog
 
+## unreleased
+- prevent dartino apps from being run using Dart VM
+
 ## 0.0.7
 - echo output from app running on device
 - initial support for launching apps on Dartuino board

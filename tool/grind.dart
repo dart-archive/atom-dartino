@@ -22,22 +22,7 @@ build() async {
 
   // --trust-type-annotations? --trust-primitives?
   await Dart2js.compileAsync(inputFile, csp: true);
-
-  // Patch the generated JS so that it works with Atom
-  String jsCode = outputFile.readAsStringSync();
-  jsCode = patchDart2JSOutput(jsCode);
-
-  // Patch in the GA UA code; replace "UA-000000-0" with a valid code.
-  String uaCode = Platform.environment['DARTINO_UA'];
-  if (uaCode != null) {
-    log('Patching with the dartlang Google Analytics code.');
-    jsCode = jsCode.replaceAll('"UA-000000-0"', '"${uaCode}"');
-  } else {
-    log('No \$DARTINO_UA environment variable set.');
-  }
-
-  // Save the modified JS
-  outputFile.writeAsStringSync(jsCode);
+  outputFile.writeAsStringSync(patchDart2JSOutput(outputFile.readAsStringSync()));
 }
 
 @Task()

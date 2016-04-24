@@ -36,6 +36,7 @@ class DartinoDevPackage extends AtomPackage {
     new Future.delayed(Duration.ZERO, () async {
       await package_deps.install('Dartino', this);
       _checkSdkInstalled();
+      _dispatch('dartino:enable');
     });
 
     // Register commands.
@@ -103,23 +104,8 @@ void openDartinoSettings([_]) {
 
 /// If an SDK is not configured, offer to download and install it.
 void _checkSdkInstalled([_]) {
-  String path = atom.config.getValue('$pluginId.sdkPath');
-
-  // TODO(danrubel): Remove this compatibility code after release 0.0.7
-  if (path == null || path.trim().isEmpty) {
-    path = atom.config.getValue('$pluginId.dartinoPath');
-    if (path == null || path.trim().isEmpty) {
-      path = atom.config.getValue('$pluginId.sodPath');
-    }
-    if (path != null && path.trim().isNotEmpty) {
-      atom.config.setValue('$pluginId.sdkPath', path);
-      atom.config.setValue('$pluginId.dartinoPath', null);
-      atom.config.setValue('$pluginId.sodPath', null);
-      return;
-    }
-  }
-
-  if (path == null || path.trim().isEmpty) {
+  String path = atom.config.getValue('$pluginId.sdkPath')?.trim();
+  if (path == null || path.isEmpty) {
     path = fs.join(fs.homedir, 'dartino-sdk');
     if (fs.existsSync(path)) {
       atom.config.setValue('$pluginId.sdkPath', path);
@@ -127,7 +113,7 @@ void _checkSdkInstalled([_]) {
       path = null;
     }
   }
-  if (path != null && path.trim().isNotEmpty) return;
+  if (path != null && path.isNotEmpty) return;
   Notification info;
   info = atom.notifications.addInfo('Install Dartino SDK?',
       detail: 'No Dartino SDK has been configured.\n'

@@ -2,6 +2,7 @@
 
 ## unreleased
 - prevent dartino apps from being run using Dart VM
+- warn the user of missing dartino.yaml and offers to create it
 
 ## 0.0.7
 - echo output from app running on device

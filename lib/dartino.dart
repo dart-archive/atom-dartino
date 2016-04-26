@@ -53,7 +53,7 @@ class DartinoDevPackage extends AtomPackage {
         'description': 'The /dev/tty* path for accessing a connected device.',
         'type': 'string',
         'default': '',
-        'order': 1
+        'order': 2
       },
       'sdkPath': {
         'title': 'SDK root directory.',
@@ -61,7 +61,7 @@ class DartinoDevPackage extends AtomPackage {
             ' or the SOD repository.',
         'type': 'string',
         'default': '',
-        'order': 2
+        'order': 1
       },
       // development
       'logging': {

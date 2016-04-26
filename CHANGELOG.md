@@ -1,8 +1,9 @@
 # dartino plugin changelog
 
-## unreleased
+## 0.0.8
 - prevent dartino apps from being run using Dart VM
 - warn the user of missing dartino.yaml and offers to create it
+- for analysis, use Dart SDK that ships as part of Dartino SDK
 
 ## 0.0.7
 - echo output from app running on device

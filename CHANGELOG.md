@@ -1,5 +1,9 @@
 # dartino plugin changelog
 
+## unreleased
+- update readme to remove Dart SDK installation step
+  now that it's bundled with the Dartino SDK.
+
 ## 0.0.8
 - prevent dartino apps from being run using Dart VM
 - warn the user of missing dartino.yaml and offers to create it

@@ -1,8 +1,9 @@
 # dartino plugin changelog
 
-## unreleased
+## 0.0.9
 - update readme to remove Dart SDK installation step
   now that it's bundled with the Dartino SDK.
+- support SoD development over USB without ethernet connection.
 
 ## 0.0.8
 - prevent dartino apps from being run using Dart VM

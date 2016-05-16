@@ -1,5 +1,8 @@
 # dartino plugin changelog
 
+## unreleased
+- added menu cmd that opens the Dartino SDK samples as a project in Atom
+
 ## 0.0.9
 - update readme to remove Dart SDK installation step
   now that it's bundled with the Dartino SDK.

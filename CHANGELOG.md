@@ -1,6 +1,6 @@
 # dartino plugin changelog
 
-## unreleased
+## 0.0.10
 - added menu cmd that opens the Dartino SDK samples as a project in Atom
 
 ## 0.0.9

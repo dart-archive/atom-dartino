@@ -13,6 +13,7 @@ import 'package:atom/node/notification.dart';
 import 'package:atom/node/package.dart';
 import 'package:atom/node/process.dart';
 import 'package:atom/node/shell.dart';
+import 'package:atom/utils/debounce.dart';
 import 'package:atom/utils/disposable.dart';
 import 'package:atom/utils/package_deps.dart' as package_deps;
 import 'package:logging/logging.dart';
@@ -45,8 +46,12 @@ class DartinoDevPackage extends AtomPackage {
   }
 
   Map config() {
-    _disposables.add(new DisposeableSubscription(
-        atom.config.onDidChange('$pluginId.sdkPath').listen(_checkSdkValid)));
+    _disposables.add(new DisposeableSubscription(atom.config
+        .onDidChange('$pluginId.sdkPath')
+        .transform(new Debounce(new Duration(seconds: 3)))
+        .listen(([_]) {
+      _dispatch('dartino:validate-sdk');
+    })));
     return {
       'devicePath': {
         'title': 'Device path.',
@@ -134,17 +139,6 @@ void _checkSdkInstalled([_]) {
         })
       ],
       dismissable: true);
-}
-
-final Duration _checkSdkTimeout = new Duration(seconds: 3);
-Timer _checkSdkTimer;
-
-/// If an SDK is configured, validate it... but not on startup
-void _checkSdkValid([_]) {
-  _checkSdkTimer?.cancel();
-  _checkSdkTimer = new Timer(_checkSdkTimeout, () {
-    _dispatch('dartino:validate-sdk');
-  });
 }
 
 void _dispatch(String commandName) {

@@ -1,5 +1,11 @@
 # dartino plugin changelog
 
+## 0.0.11
+- improve launching of SOD apps
+- allow ~ to be used when specifying Dartino SDK
+- reanalyze sources when Dartino SDK path changes
+- prompt to opt into analytics
+
 ## 0.0.10
 - added menu cmd that opens the Dartino SDK samples as a project in Atom
 

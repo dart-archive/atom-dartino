@@ -55,7 +55,8 @@ class DartinoDevPackage extends AtomPackage {
     return {
       'devicePath': {
         'title': 'Device path.',
-        'description': 'The /dev/tty* path for accessing a connected device.',
+        'description': 'The /dev/tty* path for accessing a connected device'
+            ' or "emulated" to run without a device',
         'type': 'string',
         'default': '',
         'order': 2

@@ -1,5 +1,8 @@
 # dartino plugin changelog
 
+## unreleased
+- support running Dartino apps on Nucleo board and on an emulated device
+
 ## 0.0.11
 - improve launching of SOD apps
 - allow ~ to be used when specifying Dartino SDK

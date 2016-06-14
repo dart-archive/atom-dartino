@@ -1,6 +1,6 @@
 # dartino plugin changelog
 
-## unreleased
+## 0.0.12
 - support running Dartino apps on Nucleo board and on an emulated device
 
 ## 0.0.11

@@ -103,7 +103,7 @@ class DartinoDevPackage extends AtomPackage {
   }
 }
 
-void openDartinoSettings([_]) {
+void openDartinoSettings([AtomEvent _]) {
   atom.workspace.open('atom://config/packages/dartino');
 }
 

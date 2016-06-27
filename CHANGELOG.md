@@ -1,6 +1,7 @@
 # dartino plugin changelog
 
 ## unreleased
+- rename "emulated" --> "local" for running on the local host (not emulated)
 - remove SOD support
 
 ## 0.0.12

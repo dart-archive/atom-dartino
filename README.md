@@ -2,15 +2,13 @@
 
 [![Build Status](https://travis-ci.org/dartino/atom-dartino.svg?branch=master)](https://travis-ci.org/dartino/atom-dartino)
 
-This package is a [Dartino](http://dartino.github.io/sdk/)
-and [SoD](https://github.com/domokit/sod) development plugin
+This package is a [Dartino](http://dartino.github.io/sdk/) development plugin
 for [Atom](https://atom.io)
 built on top of the Atom [dartlang](https://atom.io/packages/dartlang) plugin.
 
 ## Features
 
-- Source code analysis of [SoD](https://github.com/domokit/sod)
-and [Dartino](http://dartino.github.io/sdk/) applications.
+- Source code analysis of [Dartino](http://dartino.github.io/sdk/) applications.
 - Single command to compile, deploy, and run code
 on connected device.
 

@@ -63,8 +63,7 @@ class DartinoDevPackage extends AtomPackage {
       },
       'sdkPath': {
         'title': 'SDK root directory.',
-        'description': 'The directory containing the Dartino SDK'
-            ' or the SOD repository.',
+        'description': 'The directory containing the Dartino SDK',
         'type': 'string',
         'default': '',
         'order': 1

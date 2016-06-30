@@ -1,7 +1,7 @@
 {
   "name": "dartino",
   "main": "./web/entry.dart.js",
-  "version": "0.0.12",
+  "version": "0.1.0",
   "description": "A Dartino development environment for Atom.",
   "keywords": [
     "dart",

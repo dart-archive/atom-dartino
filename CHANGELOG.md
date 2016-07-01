@@ -1,5 +1,8 @@
 # dartino plugin changelog
 
+## unreleased
+- getting started link updated to https://dartino.org/getting-started/
+
 ## 0.1.0
 - rename "emulated" --> "local" for running on the local host (not emulated)
 - remove SOD support

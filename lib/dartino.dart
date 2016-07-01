@@ -147,5 +147,5 @@ void _dispatch(String commandName) {
 }
 
 _showGettingStarted(event) {
-  shell.openExternal('https://dartino.org/index.html');
+  shell.openExternal('https://dartino.org/getting-started/');
 }
